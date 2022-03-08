@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center">
-
-
         <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/img"
@@ -17,7 +13,8 @@
                 android:layout_height="wrap_content"
                 android:background="#fff"
                 android:scaleType="center"
-                android:src="@drawable/theofficemap" />
+                android:src="@drawable/theofficemap"
+                android:contentDescription="@string/User1" />
 
             <Button
                 android:id="@+id/User1"
@@ -30,11 +27,6 @@
                 android:layout_marginEnd="304dp"
                 android:layout_marginBottom="724dp"
                 android:contentDescription="@string/User1"
-                android:text="User1"
+                android:text="@string/username"
                 tools:ignore="SpeakableTextPresentCheck" />
         </RelativeLayout>
-
-
-
-
-</LinearLayout>
