@@ -1,4 +1,4 @@
-package com.example.hive;
+package com.example.hive.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -19,6 +19,10 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.hive.MainActivity;
+import com.example.hive.R;
+import com.example.hive.activities.QR.QRCodeFoundListener;
+import com.example.hive.activities.QR.QRCodeImageAnalyzer;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
@@ -42,8 +46,8 @@ public class QRCodeScanner extends AppCompatActivity {
         checkInBtn = findViewById(R.id.checkInBtn);
         checkInBtn.setVisibility(View.INVISIBLE);
         checkInBtn.setOnClickListener((View v) -> {
-                Toast.makeText(getApplicationContext(), qrStr, Toast.LENGTH_SHORT).show();
-                Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrStr);
+            Toast.makeText(getApplicationContext(), qrStr, Toast.LENGTH_SHORT).show();
+            Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrStr);
         });
 
 

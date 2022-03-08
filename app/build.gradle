@@ -36,13 +36,18 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // qr deps
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
+
     implementation 'com.google.mlkit:barcode-scanning:17.0.0'
     def camerax_version = "1.1.0-beta02"
     implementation "androidx.camera:camera-camera2:$camerax_version"
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:$camerax_version"
+    implementation "com.journeyapps:zxing-android-embedded:4.2.0"
 
+    // gesture
+    implementation 'com.github.nisrulz:sensey:1.9.0'
+
+    // http, json
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
 }
