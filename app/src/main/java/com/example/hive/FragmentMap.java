@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
-public class fragment_map_controller extends Fragment {
+public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
     @Override

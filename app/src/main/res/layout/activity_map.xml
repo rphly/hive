@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fooFragment"
-        android:name="com.example.hive.fragment_map_controller"
+        android:name="com.example.hive.FragmentMap"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

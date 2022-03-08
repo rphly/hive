@@ -16,17 +16,17 @@
                 android:src="@drawable/theofficemap"
                 android:contentDescription="@string/User1" />
 
-            <Button
-                android:id="@+id/User1"
-                android:layout_width="72dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="304dp"
-                android:layout_marginBottom="724dp"
-                android:contentDescription="@string/User1"
-                android:text="@string/username"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </RelativeLayout>
+    <Button
+        android:id="@+id/User1"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="310dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="545dp"
+        android:contentDescription="@string/User1"
+        android:text="@string/username"
+        tools:ignore="SpeakableTextPresentCheck" />
+</RelativeLayout>
