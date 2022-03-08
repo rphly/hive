@@ -3,4 +3,8 @@
     <string name="User1"></string>
     <string name="todo">TODO</string>
     <string name="username">User1</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_booking">My Booking</string>
+    <string name="nav_light">Light Control</string>
+    <string name="nav_focus">Focus Mode</string>
 </resources>
