@@ -5,14 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/img"
+    <fragment
+        android:name="com.example.hive.fragment_map_controller"
+        android:id="@+id/fooFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:contentDescription="@string/todo"
-        android:scaleType="center"
-        android:src="@drawable/theofficemap" />
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/User1"
