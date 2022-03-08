@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="horizontal">
 
     <fragment
-        android:name="com.example.hive.fragment_map_controller"
         android:id="@+id/fooFragment"
+        android:name="com.example.hive.fragment_map_controller"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -15,6 +16,7 @@
         android:id="@+id/User1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:text="@string/User1" />
 
 </LinearLayout>
