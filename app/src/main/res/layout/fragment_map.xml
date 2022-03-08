@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/img"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:scaleType="center"
-            android:src="@drawable/theofficemap" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/User1"
-            android:layout_width="76dp"
-            android:layout_height="30dp"
-            android:contentDescription="@string/User1"
-            android:text="@string/User1" />
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:scaleType="center"
+                android:src="@drawable/theofficemap" />
 
-
-    </FrameLayout>
+            <Button
+                android:id="@+id/User1"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="304dp"
+                android:layout_marginBottom="724dp"
+                android:contentDescription="@string/User1"
+                android:text="User1"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </RelativeLayout>
 
 
 
