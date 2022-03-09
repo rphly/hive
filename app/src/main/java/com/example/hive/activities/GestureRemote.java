@@ -6,13 +6,26 @@ import android.view.MotionEvent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hive.R;
+import com.example.hive.services.Lifx;
+import com.example.hive.utils.Constants;
+import com.example.hive.utils.Debouncer;
 import com.github.nisrulz.sensey.FlipDetector;
 import com.github.nisrulz.sensey.Sensey;
 import com.github.nisrulz.sensey.ShakeDetector;
 import com.github.nisrulz.sensey.TouchTypeDetector;
 
+import java.util.concurrent.TimeUnit;
+
 public class GestureRemote extends AppCompatActivity {
-    private int TOGGLE_LIGHT_STATE = 0;
+    private int IS_SHAKING = 0;
+    final Debouncer debouncer;
+    final Lifx LifxService;
+    private Constants.Temperature currentTemp = Constants.Temperature.WARM;
+
+    public GestureRemote() throws Exception {
+         debouncer = new Debouncer();
+         LifxService = new Lifx("");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +58,21 @@ public class GestureRemote extends AppCompatActivity {
             }
         };
 
-        // shake listener
+        // shake detector
         ShakeDetector.ShakeListener shakeListener =new ShakeDetector.ShakeListener() {
             @Override public void onShakeDetected() {
                 // Shake detected, do something
-                if (TOGGLE_LIGHT_STATE == 0) {
+                if (IS_SHAKING == 0) {
+                    LifxService.toggleLight();
                     System.out.println("Toggle light");
-                    TOGGLE_LIGHT_STATE = 1;
+                    IS_SHAKING = 1;
                 }
             }
 
             @Override public void onShakeStopped() {
-                if (TOGGLE_LIGHT_STATE == 1) {
+                if (IS_SHAKING == 1) {
                     System.out.println("Stopped shaking");
-                    TOGGLE_LIGHT_STATE = 0;
+                    IS_SHAKING = 0;
                 }
             }
 
@@ -70,6 +84,8 @@ public class GestureRemote extends AppCompatActivity {
             public void onDoubleTap() {
                 // change temperature
                 System.out.println("Toggle warmth");
+                LifxService.setLightTempColdOrWarm(currentTemp);
+                currentTemp = (currentTemp == Constants.Temperature.COLD) ? Constants.Temperature.WARM : Constants.Temperature.COLD;
             }
 
             @Override
@@ -77,11 +93,24 @@ public class GestureRemote extends AppCompatActivity {
                 switch (scrollDirection) {
                     case TouchTypeDetector.SCROLL_DIR_UP:
                         // scroll up
-                        System.out.println("Increase brightness");
+                        debouncer.debounce(Void.class, new Runnable() {
+                            @Override public void run() {
+                                System.out.println("Increase brightness");
+                                LifxService.increaseBrightness();
+
+                            }
+                        }, 500, TimeUnit.MILLISECONDS);
+
                         break;
                     case TouchTypeDetector.SCROLL_DIR_DOWN:
                         // scroll down
-                        System.out.println("Decrease brightness");
+                        debouncer.debounce(Void.class, new Runnable() {
+                            @Override public void run() {
+                                System.out.println("Decrease brightness");
+                                LifxService.decreaseBrightness();
+
+                            }
+                        }, 500, TimeUnit.MILLISECONDS);
                         break;
                     default:
                         break;
@@ -110,7 +139,7 @@ public class GestureRemote extends AppCompatActivity {
         };
 
         Sensey.getInstance().startFlipDetection(flipListener);
-        Sensey.getInstance().startShakeDetection(shakeListener);
+        Sensey.getInstance().startShakeDetection(3.0F, 1000L,shakeListener);
         Sensey.getInstance().startTouchTypeDetection(this, touchListener);
     }
 

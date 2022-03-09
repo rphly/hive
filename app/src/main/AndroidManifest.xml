@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hive">
         <activity
-            android:name=".GestureRemote"
+            android:name=".activities.GestureRemote"
             android:exported="true" />
         <activity
-            android:name=".QRCodeScanner"
+            android:name=".activities.QRCodeScanner"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

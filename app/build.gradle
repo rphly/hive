@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.github.nisrulz:sensey:1.9.0'
 
     // http, json
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.13'
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:3.12.13")
     implementation 'com.google.code.gson:gson:2.9.0'
 }
