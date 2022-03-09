@@ -1,4 +1,4 @@
-package com.example.hive;
+package com.example.hive.utils;
 
 public class Constants {
     // focus mode
