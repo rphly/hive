@@ -1,18 +1,12 @@
 package com.example.hive;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,16 +14,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, MapActivity.class));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // set to_qr button
-        Button btnMap = (Button)findViewById(R.id.go_to_map);
+        Button btnMap = findViewById(R.id.go_to_map);
         btnMap.setText("See Map");
-        btnMap.setOnClickListener((View v) -> {
-            onNavigateToMapActivity();
-        });
+        btnMap.setOnClickListener((View v) -> onNavigateToMapActivity());
     }
 }

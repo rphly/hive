@@ -1,5 +1,6 @@
 package com.example.hive;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
 
 public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -26,6 +29,7 @@ public class FragmentMap extends Fragment {
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
@@ -33,16 +37,16 @@ public class FragmentMap extends Fragment {
         Resources res=getResources();
         Bitmap mBitmap = BitmapFactory.decodeResource(res, R.drawable.theofficemap);
         BitmapDrawable bDrawable = new BitmapDrawable(res, mBitmap);
-        final ImageView ImageView_BitmapView = (ImageView) view.findViewById(R.id.img);
+        final ImageView ImageView_BitmapView = view.findViewById(R.id.img);
         //get the size of the image and  the screen
         int bitmapWidth = bDrawable.getIntrinsicWidth();
         int bitmapHeight = bDrawable.getIntrinsicHeight();
-        int screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        int screenWidth = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getWidth();
         int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
 
         // set maximum scroll amount (based on center of image)
-        int maxX = (int)((bitmapWidth / 2) - (screenWidth / 2));
-        int maxY = (int)((bitmapHeight / 2) - (screenHeight / 2));
+        int maxX = (bitmapWidth / 2) - (screenWidth / 2);
+        int maxY = (bitmapHeight / 2) - (screenHeight / 2);
 
         // set scroll limits
         final int maxLeft = (maxX * -1);
