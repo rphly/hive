@@ -10,7 +10,7 @@ import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.MapActivity;
 import com.example.hive.activities.QR.QRCodeScanner;
 import com.example.hive.activities.SignIn;
-import com.example.hive.services.Desks;
+import com.example.hive.services.DeskService;
 import com.example.hive.utils.AuthenticatedActivity;
 import com.example.hive.services.Response;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,7 +78,7 @@ public class MainActivity extends AuthenticatedActivity {
         Button testBtn = findViewById(R.id.testBtn);
         testBtn.setText("Test");
         testBtn.setOnClickListener((View v) -> {
-            Desks.getDeskById("1", new Response() {
+            DeskService.getDeskById("1", new Response() {
 
                 @Override
                 public void onSuccess(Map data) {
