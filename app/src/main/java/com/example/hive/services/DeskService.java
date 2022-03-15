@@ -7,7 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Map;
 
-public class Desks {
+public class DeskService {
     public static void getDeskById(String id, Response handler) {
         final DatabaseReference collection = FirebaseDatabase.getInstance().getReference().child("Desks");
         collection.child(id).get().addOnCompleteListener(task -> {
