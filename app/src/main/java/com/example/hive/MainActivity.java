@@ -22,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, GestureRemote.class));
     }
 
+    private void onNavigateToMapActivity() {
+        startActivity(new Intent(MainActivity.this, MapActivity.class));
+    }
+
+    @SuppressLint("SetTextI18n")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         gestureRemoteBtn.setOnClickListener((View v) -> {
             onNavigateToGestureRemote();
         });
+        Button btnMap = findViewById(R.id.go_to_map);
+        btnMap.setText("See Map");
+        btnMap.setOnClickListener((View v) -> onNavigateToMapActivity());
     }
 
 }

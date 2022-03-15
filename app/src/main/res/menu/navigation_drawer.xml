@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item
+android:id="@+id/main_item"
+android:title="">
+<menu>
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home"
+        android:title="@string/nav_home"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/my_booking"
+        android:icon="@drawable/my_booking"
+        android:title="@string/nav_booking"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/light_control"
+        android:icon="@drawable/light_control"
+        android:title="@string/nav_light"
+        android:checkable="true"/>
+    <item
+        android:id="@+id/focus_mode"
+        android:icon="@drawable/focus_mode"
+        android:title="@string/nav_focus"
+        android:checkable="true"/>
+</menu>
+</item>
+
+    </menu>
