@@ -13,38 +13,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
+        android:contentDescription="@string/User1"
         android:scaleType="center"
-        android:src="@drawable/theofficemap"
-        android:contentDescription="@string/User1" />
+        android:src="@drawable/theofficemap" />
 
     <RelativeLayout
-        android:background="@android:color/transparent"
         android:id="@+id/usermap"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/User1"
         android:scaleType="center"
-        android:src="@drawable/theofficemap"
-        android:contentDescription="@string/User1">
+        android:src="@drawable/theofficemap">
 
         <Button
+            android:id="@+id/User2"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="268dp"
+            android:layout_marginTop="249dp"
             android:alpha="1.0"
+            android:contentDescription="@string/User2"
+            android:text="@string/User2"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
             android:id="@+id/User1"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="165dp"
-            android:layout_marginEnd="175dp"
-            android:layout_marginBottom="769dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="31dp"
+            android:layout_marginTop="263dp"
             android:contentDescription="@string/User1"
-            android:text="@string/username"
+            android:text="@string/User1"
             tools:ignore="SpeakableTextPresentCheck" />
 
 
     </RelativeLayout>
 
-<!--    <View-->
+
+    <!--    <View-->
 <!--        android:id="@+id/usermap"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->

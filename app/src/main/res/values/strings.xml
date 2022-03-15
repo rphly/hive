@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">hive</string>
-    <string name="User1"></string>
+    <string name="User1"> Helen </string>
+    <string name="User2"> Bob </string>
     <string name="todo">TODO</string>
     <string name="username">User1</string>
     <string name="nav_home">Home</string>

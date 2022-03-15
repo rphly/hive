@@ -57,11 +57,23 @@ public class FragmentMap extends Fragment {
         final int maxTop = (maxY * -1);
         final int maxBottom = maxY;
 
+        //Set up user buttons and the user map overlay
         RelativeLayout mapFrame = (RelativeLayout) view.findViewById(R.id.usermap);
+        ViewGroup.LayoutParams mapLayoutParams = mapFrame.getLayoutParams();
+        mapLayoutParams.width = bitmapWidth;
+        mapLayoutParams.height = bitmapHeight;
+        mapFrame.setLayoutParams(mapLayoutParams);
+
+        // test button
         Button b1 = new Button(mapFrame.getContext());
         b1.setAlpha(1.0F);
-        b1.setText("Btn");
-        mapFrame.addView(b1);
+        b1.setText("BtnTest");
+
+        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        buttonParams.leftMargin = -bitmapWidth/4;
+        buttonParams.topMargin = 0;
+
+        mapFrame.addView(b1, buttonParams);
 
 
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
