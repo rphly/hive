@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hive.BuildConfig;
 import com.example.hive.R;
 import com.example.hive.services.Lifx;
 import com.example.hive.utils.Constants;
@@ -24,7 +25,7 @@ public class GestureRemote extends AppCompatActivity {
 
     public GestureRemote() throws Exception {
          debouncer = new Debouncer();
-         LifxService = new Lifx("");
+         LifxService = Lifx.getInstance(BuildConfig.LIFX_API_KEY);
     }
 
     @Override
