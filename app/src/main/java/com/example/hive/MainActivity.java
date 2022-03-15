@@ -1,5 +1,6 @@
 package com.example.hive;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,10 +8,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.hive.activities.QRCodeScanner;
 import com.example.hive.activities.GestureRemote;
+import com.example.hive.activities.MapActivity;
+import com.example.hive.activities.QRCodeScanner;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         gestureRemoteBtn.setOnClickListener((View v) -> {
             onNavigateToGestureRemote();
         });
+
+        // map button
         Button btnMap = findViewById(R.id.go_to_map);
         btnMap.setText("See Map");
         btnMap.setOnClickListener((View v) -> onNavigateToMapActivity());
