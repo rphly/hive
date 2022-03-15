@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.MapActivity;
-import com.example.hive.activities.QRCodeScanner;
+import com.example.hive.activities.QR.QRCodeScanner;
+import com.example.hive.activities.SignIn;
+import com.example.hive.utils.AuthenticatedActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AuthenticatedActivity {
 
     private void onNavigateToQRScanner() throws JSONException {
         startActivity(new Intent(this, QRCodeScanner.class));
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void onNavigateToMapActivity() {
         startActivity(new Intent(MainActivity.this, MapActivity.class));
+    }
+
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, SignIn.class);
+        this.finishAffinity();
+        this.startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
@@ -56,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         Button btnMap = findViewById(R.id.go_to_map);
         btnMap.setText("See Map");
         btnMap.setOnClickListener((View v) -> onNavigateToMapActivity());
+
+        // signOut button
+        Button signOutBtn = findViewById(R.id.sign_out);
+        signOutBtn.setText("Sign Out");
+        signOutBtn.setOnClickListener((View v) -> signOut());
     }
 
 }

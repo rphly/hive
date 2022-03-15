@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hive.MainActivity;
 import com.example.hive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +32,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_in);
 
         register = findViewById(R.id.register);
         register.setOnClickListener(this);
@@ -82,6 +83,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                 if(task.isSuccessful()){
                     //go to home page
                     Toast.makeText(SignIn.this,"Log in success!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(SignIn.this, MainActivity.class));
+                    finish();
                 }
                 else{
                     Toast.makeText(SignIn.this,"Log in failed, please check your email and password",Toast.LENGTH_LONG).show();

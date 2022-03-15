@@ -1,4 +1,4 @@
-package com.example.hive.activities;
+package com.example.hive.activities.QR;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -21,8 +21,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.hive.MainActivity;
 import com.example.hive.R;
-import com.example.hive.activities.QR.QRCodeFoundListener;
-import com.example.hive.activities.QR.QRCodeImageAnalyzer;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;

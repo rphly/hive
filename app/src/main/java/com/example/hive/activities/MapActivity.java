@@ -2,11 +2,10 @@ package com.example.hive.activities;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hive.R;
+import com.example.hive.utils.AuthenticatedActivity;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AuthenticatedActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

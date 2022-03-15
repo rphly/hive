@@ -3,11 +3,10 @@ package com.example.hive.activities;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hive.BuildConfig;
 import com.example.hive.R;
 import com.example.hive.services.Lifx;
+import com.example.hive.utils.AuthenticatedActivity;
 import com.example.hive.utils.Constants;
 import com.example.hive.utils.Debouncer;
 import com.github.nisrulz.sensey.FlipDetector;
@@ -17,7 +16,7 @@ import com.github.nisrulz.sensey.TouchTypeDetector;
 
 import java.util.concurrent.TimeUnit;
 
-public class GestureRemote extends AppCompatActivity {
+public class GestureRemote extends AuthenticatedActivity {
     private int IS_SHAKING = 0;
     final Debouncer debouncer;
     final Lifx LifxService;
