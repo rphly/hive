@@ -83,6 +83,7 @@ public class Lifx {
                         if (jsonArray.length() > 0) {
                             JSONObject j = (JSONObject) jsonArray.get(0);
                             mainLightId = (String) j.get("id");
+                            response.body().close();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -174,7 +175,6 @@ public class Lifx {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                System.out.println(response.code());
                 if (response.isSuccessful()) {
                     System.out.println("Light temp successfully toggled.");
                 }
