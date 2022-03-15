@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +24,7 @@ public class FragmentMap extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
+
         return inflater.inflate(R.layout.fragment_map, parent, false);
     }
 
@@ -53,6 +56,14 @@ public class FragmentMap extends Fragment {
         final int maxRight = maxX;
         final int maxTop = (maxY * -1);
         final int maxBottom = maxY;
+
+        RelativeLayout mapFrame = (RelativeLayout) view.findViewById(R.id.usermap);
+        Button b1 = new Button(mapFrame.getContext());
+        b1.setAlpha(1.0F);
+        b1.setText("Btn");
+        mapFrame.addView(b1);
+
+
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
         {
             float downX, downY;
@@ -146,6 +157,7 @@ public class FragmentMap extends Fragment {
                             }
                         }
 
+                        mapFrame.scrollBy(scrollByX, scrollByY);
                         ImageView_BitmapView.scrollBy(scrollByX, scrollByY);
                         downX = currentX;
                         downY = currentY;
