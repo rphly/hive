@@ -1,8 +1,10 @@
-package com.example.hive;
+package com.example.hive.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hive.R;
 
 public class MapActivity extends AppCompatActivity {
 
