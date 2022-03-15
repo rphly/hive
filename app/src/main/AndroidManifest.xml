@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hive">
         <activity
+            android:name=".activities.SignIn"
+            android:exported="true" />
+        <activity
+            android:name=".activities.RegisterUser"
+            android:exported="true" />
+        <activity
             android:name=".activities.GestureRemote"
             android:exported="true" />
         <activity
