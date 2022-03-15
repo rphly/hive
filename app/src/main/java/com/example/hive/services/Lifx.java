@@ -27,19 +27,34 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Lifx {
-    /* Interact with LIFX smart LED bulbs */
-    private OkHttpClient client = null;
+    /* Class to nteract with LIFX smart LED bulb APIs */
+
+    // enforce Singleton
+    private static Lifx instance = null;
+    private OkHttpClient client;
     private String mainLightId = null;
 
-    public Lifx(String apiKey) throws Exception {
+    private Lifx(String apiKey) throws Exception {
         if (apiKey == null) {
             throw new Exception("API_KEY cannot be null");
         }
-
-        // create Request instance to intercept and attach api key
         this.client = new OkHttpClient.Builder().addInterceptor(new AuthorizationInterceptor(apiKey)).build();
         getMainLight();
     }
+
+    public static Lifx getInstance() throws Exception {
+        if (instance == null) {
+            throw new Exception("No instance created.");
+        }
+        return instance;
+    };
+
+    public static Lifx getInstance(String apiKey) throws Exception {
+        if (instance == null) {
+            instance = new Lifx(apiKey);
+        }
+        return instance;
+    };
 
     private Call getMainLight(Callback callback) {
         String url = String.format(LIFX_BASE_URL, "all");
@@ -194,6 +209,7 @@ class AuthorizationInterceptor implements Interceptor {
             Request authRequest = originalRequest.newBuilder()
                 .header("Authorization", String.format("Bearer %s", apiKey))
                 .build();
+
             return chain.proceed(authRequest);
         }
         return chain.proceed(originalRequest);
