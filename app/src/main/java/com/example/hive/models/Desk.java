@@ -2,22 +2,27 @@ package com.example.hive.models;
 
 public class Desk {
     private String id;
-    private int location;
-    private String userId;
+    private String currentUserId;
     private String lightToken;
     private String label;
-    private float x;
-    private float y;
+    private Location location;
 
-    public Desk() {};
-
-    // TODO: get desk from firebase by id
-    public Desk(String id) {
-
+    public Desk(String id, String currentUserId, String lightToken, String label, float x, float y) {
+        this.id = id;
+        this.currentUserId = currentUserId;
+        this.lightToken = lightToken;
+        this.label = label;
+        this.location = new Location(x, y);
     };
-    public boolean getAvailability() {return true;}
-    public User getCurrentUser() {return new User(this.userId);}
-    public Location getLocation() {return new Location(this.x, this.y);}
+
+    public boolean isAvailable() {
+        return currentUserId == null;
+    }
+    public User getCurrentUser() {
+
+        return new User(this.currentUserId);
+    }
+    public Location getLocation() {return location;}
     public String getLabel() {return this.label;}
     public boolean signIn() {return true;}
     public boolean signOut() {return true;}
@@ -35,12 +40,12 @@ class Location {
         this.y = y;
     };
 
-    public String getLocationString() {
+    @Override
+    public String toString() {
         return String.format("%f, %f", this.x, this.y);
     }
 
     public void printLocation() {
-        System.out.println(getLocationString());
+        System.out.println(this.toString());
     }
-
 }

@@ -15,8 +15,8 @@ public class User {
     // TODO fill in these methods
     public String getUserStatus() {return "Available";}
     public String getUserFullName() {return this.fullName;}
-    public Desk getUserCurrentDesk() {
+    public void getUserCurrentDesk() {
         // get id from firebase
-        return new Desk();
+
     }
 }

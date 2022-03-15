@@ -10,10 +10,14 @@ import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.MapActivity;
 import com.example.hive.activities.QR.QRCodeScanner;
 import com.example.hive.activities.SignIn;
+import com.example.hive.services.Desks;
 import com.example.hive.utils.AuthenticatedActivity;
+import com.example.hive.services.Response;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
+
+import java.util.Map;
 
 public class MainActivity extends AuthenticatedActivity {
 
@@ -43,7 +47,7 @@ public class MainActivity extends AuthenticatedActivity {
         setContentView(R.layout.activity_main);
 
         // set to_qr button
-        Button scanTableBtn = (Button)findViewById(R.id.go_to_qr);
+        Button scanTableBtn = (Button) findViewById(R.id.go_to_qr);
         scanTableBtn.setText("Scan table");
         scanTableBtn.setOnClickListener((View v) -> {
             try {
@@ -69,6 +73,24 @@ public class MainActivity extends AuthenticatedActivity {
         Button signOutBtn = findViewById(R.id.sign_out);
         signOutBtn.setText("Sign Out");
         signOutBtn.setOnClickListener((View v) -> signOut());
+
+        // test button
+        Button testBtn = findViewById(R.id.testBtn);
+        testBtn.setText("Test");
+        testBtn.setOnClickListener((View v) -> {
+            Desks.getDeskById("1", new Response() {
+
+                @Override
+                public void onSuccess(Map data) {
+                    System.out.println(data.toString());
+                }
+
+                @Override
+                public void onFailure() {
+                    System.out.println("Failwhale");
+                }
+            });
+        });
     }
 
 }
