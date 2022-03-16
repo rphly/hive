@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -58,22 +59,27 @@ public class FragmentMap extends Fragment {
         final int maxBottom = maxY;
 
         //Set up user buttons and the user map overlay
-        RelativeLayout mapFrame = (RelativeLayout) view.findViewById(R.id.usermap);
-        ViewGroup.LayoutParams mapLayoutParams = mapFrame.getLayoutParams();
-        mapLayoutParams.width = bitmapWidth;
-        mapLayoutParams.height = bitmapHeight;
-        mapFrame.setLayoutParams(mapLayoutParams);
+        RelativeLayout mapRelativeLayout = view.findViewById(R.id.usermap);
+        FrameLayout.LayoutParams mapLayoutParams1 = (FrameLayout.LayoutParams) mapRelativeLayout.getLayoutParams();
+        mapLayoutParams1.width = bitmapWidth;
+        mapLayoutParams1.height = bitmapHeight;
+
+        // https://stackoverflow.com/questions/18655940/linearlayoutlayoutparams-cannot-be-cast-to-android-widget-framelayoutlayoutpar
+        mapRelativeLayout.setLayoutParams(mapLayoutParams1);
 
         // test button
-        Button b1 = new Button(mapFrame.getContext());
+        Button b1 = new Button(mapRelativeLayout.getContext());
         b1.setAlpha(1.0F);
         b1.setText("BtnTest");
 
         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        buttonParams.leftMargin = -bitmapWidth/4;
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        buttonParams.rightMargin = 0;
         buttonParams.topMargin = 0;
-
-        mapFrame.addView(b1, buttonParams);
+        String location = "(" + b1.getX() + "," + b1.getY() + ")";
+        b1.setText(location);
+        mapRelativeLayout.addView(b1, buttonParams);
 
 
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
@@ -169,7 +175,7 @@ public class FragmentMap extends Fragment {
                             }
                         }
 
-                        mapFrame.scrollBy(scrollByX, scrollByY);
+                        mapRelativeLayout.scrollBy(scrollByX, scrollByY);
                         ImageView_BitmapView.scrollBy(scrollByX, scrollByY);
                         downX = currentX;
                         downY = currentY;
