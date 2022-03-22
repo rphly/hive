@@ -1,8 +1,6 @@
-package com.example.hive;
+package com.example.hive.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -12,6 +10,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hive.R;
+import com.example.hive.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth mAuth;
-    private EditText EditTextfullName, EditTextemail, EditTextpassword;
+    private EditText EditTextfirstName, EditTextemail, EditTextpassword, EditTextlastName;
     private ProgressBar progressBar;
     private TextView registerUser;
 
@@ -34,7 +37,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         registerUser = (Button) findViewById(R.id.registerUser);
         registerUser.setOnClickListener(this);
 
-        EditTextfullName = (EditText) findViewById(R.id.fullName);
+        EditTextfirstName = (EditText) findViewById(R.id.firstName);
+        EditTextlastName = (EditText) findViewById(R.id.lastName);
         EditTextemail = (EditText) findViewById(R.id.email);
         EditTextpassword = (EditText) findViewById(R.id.password);
 
@@ -50,14 +54,23 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+    private void onNavigateToRegistrationSuccessfulActivity(){
+        startActivity(new Intent(this, RegistrationSuccessful.class));
+    }
 
     private void registerUser() {
         String email = EditTextemail.getText().toString().trim();
-        String fullName = EditTextfullName.getText().toString().trim();
+        String firstName = EditTextfirstName.getText().toString().trim();
+        String lastName = EditTextlastName.getText().toString().trim();
         String password = EditTextpassword.getText().toString().trim();
-        if(fullName.isEmpty()){
-            EditTextfullName.setError("Please enter your full name");
-            EditTextfullName.requestFocus();
+        if(firstName.isEmpty()){
+            EditTextfirstName.setError("Please enter your full name");
+            EditTextfirstName.requestFocus();
+            return;
+        }
+        if(lastName.isEmpty()){
+            EditTextlastName.setError("Please enter your full name");
+            EditTextlastName.requestFocus();
             return;
         }
         if(email.isEmpty()){
@@ -80,26 +93,28 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             EditTextpassword.requestFocus();
             return;
         }
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        User user = new User(fullName, email);
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        if(task.isSuccessful()){
+                            User user = new User(firstName+" "+lastName, email);
 
-                        FirebaseDatabase.getInstance().getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    Toast.makeText(RegisterUser.this,"User has been registered successfully", Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.GONE);
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        //Toast.makeText(RegisterUser.this,"User has been registered successfully", Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.GONE);
+                                        task.addOnCompleteListener((Task -> onNavigateToRegistrationSuccessfulActivity()));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
-                }
-            });
+                });
     }
 }
