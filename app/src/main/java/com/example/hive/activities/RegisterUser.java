@@ -1,5 +1,6 @@
 package com.example.hive.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hive.MainActivity;
 import com.example.hive.R;
 import com.example.hive.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth mAuth;
-    private EditText EditTextfullName, EditTextemail, EditTextpassword;
+    private EditText EditTextFirstName, EditTextLastName, EditTextemail, EditTextpassword;
     private ProgressBar progressBar;
     private TextView registerUser;
 
@@ -36,7 +38,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         registerUser = (Button) findViewById(R.id.registerUser);
         registerUser.setOnClickListener(this);
 
-        EditTextfullName = (EditText) findViewById(R.id.fullName);
+        EditTextFirstName = (EditText) findViewById(R.id.firstName);
+        EditTextLastName = (EditText) findViewById(R.id.lastName);
         EditTextemail = (EditText) findViewById(R.id.email);
         EditTextpassword = (EditText) findViewById(R.id.password);
 
@@ -55,15 +58,21 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     private void registerUser() {
         String email = EditTextemail.getText().toString().trim();
-        String fullName = EditTextfullName.getText().toString().trim();
+        String firstName = EditTextFirstName.getText().toString().trim();
+        String lastName = EditTextLastName.getText().toString().trim();
         String password = EditTextpassword.getText().toString().trim();
-        if(fullName.isEmpty()){
-            EditTextfullName.setError("Please enter your full name");
-            EditTextfullName.requestFocus();
+        if(firstName.isEmpty()){
+            EditTextFirstName.setError("Please enter your first name");
+            EditTextFirstName.requestFocus();
+            return;
+        }
+        if(lastName.isEmpty()){
+            EditTextLastName.setError("Please enter your last name");
+            EditTextLastName.requestFocus();
             return;
         }
         if(email.isEmpty()){
-            EditTextemail.setError("Please enter your full name");
+            EditTextemail.setError("Please enter your email");
             EditTextemail.requestFocus();
             return;
         }
@@ -87,8 +96,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(fullName, email);
+                        if (!task.isSuccessful()) {
+                            task.getException().printStackTrace();
+                            Toast.makeText(RegisterUser.this,task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            User user = new User(id, firstName, lastName, email);
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -97,6 +111,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                     if(task.isSuccessful()){
                                         Toast.makeText(RegisterUser.this,"User has been registered successfully", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
+                                        startActivity(new Intent(RegisterUser.this, MainActivity.class));
+                                        finish();
                                     }
                                 }
                             });

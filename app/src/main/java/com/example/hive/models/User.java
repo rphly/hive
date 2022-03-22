@@ -1,22 +1,20 @@
 package com.example.hive.models;
 
 public class User {
-    private String fullName, email;
+    private String firstName, lastName, email, id;
 
-    public User(){};
-
-    public User(String userId){};
-
-    public User(String fullName, String email) {
-        this.fullName = fullName;
+    public User(String id, String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
+        this.id = id;
     }
 
     // TODO fill in these methods
-    public String getUserStatus() {return "Available";}
-    public String getUserFullName() {return this.fullName;}
-    public void getUserCurrentDesk() {
+    public String getStatus() {return "Available";}
+    public String getFullName() {return this.firstName + " " + this.lastName;}
+    public String getId() {return this.id;}
+    public void getCurrentDesk() {
         // get id from firebase
-
     }
 }

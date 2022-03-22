@@ -1,5 +1,8 @@
 package com.example.hive.models;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class Desk {
     private String id;
     private String currentUserId;
@@ -18,15 +21,38 @@ public class Desk {
     public boolean isAvailable() {
         return currentUserId == null;
     }
-    public User getCurrentUser() {
-
-        return new User(this.currentUserId);
+    public String getCurrentUserId() {
+        return this.currentUserId;
     }
     public Location getLocation() {return location;}
     public String getLabel() {return this.label;}
     public boolean signIn() {return true;}
     public boolean signOut() {return true;}
     public String getLightToken() {return this.lightToken;}
+
+    public static Desk fromObject(Object obj) {
+        Map data = (Map) obj;
+        String lightToken = String.valueOf(data.get("light_token"));
+        String label = (String) data.get("label");
+        Float x = Float.valueOf(String.valueOf(data.get("location_x")));
+        Float y = Float.valueOf(String.valueOf(data.get("location_y")));
+        String currentUserId = (String) data.get("current_user");
+        String id = String.valueOf(data.get("id"));
+
+        Desk desk = new Desk(id, currentUserId, lightToken, label, x, y);
+        return desk;
+    }
+
+    public static ArrayList<Desk> fromObjects(Object obj) {
+        ArrayList res = (ArrayList) obj;
+        ArrayList data = new ArrayList<Desk>();
+        for (Object o: res) {
+            if (o != null) {
+                data.add(Desk.fromObject(o));
+            }
+        }
+        return data;
+    }
 }
 
 class Location {
