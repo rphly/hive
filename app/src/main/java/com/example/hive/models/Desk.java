@@ -1,5 +1,8 @@
 package com.example.hive.models;
 
+import com.example.hive.services.DeskService;
+import com.example.hive.services.Response;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -26,8 +29,12 @@ public class Desk {
     }
     public Location getLocation() {return location;}
     public String getLabel() {return this.label;}
-    public boolean signIn() {return true;}
-    public boolean signOut() {return true;}
+    public void signIn(User user, Response handler) {
+        DeskService.signInToDesk(this.id, user.getId(), handler);
+    }
+    public void signOut(Response handler) {
+        DeskService.signOutFromDesk(this.id, handler);
+    }
     public String getLightToken() {return this.lightToken;}
 
     public static Desk fromObject(Object obj) {

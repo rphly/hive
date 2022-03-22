@@ -24,4 +24,29 @@ public class BaseService {
             }
         });
     };
+
+    public static void writeToFirebase(DatabaseReference collection, Object data, Response handler) throws Exception {
+        if (data == null) {
+            throw new Exception("ABORT: attempted to set null data");
+        }
+        collection.setValue(data).addOnCompleteListener(task -> {
+            if(!task.isSuccessful()) {
+                System.out.println(String.format("Failed to set value: %s <- %s", collection.getKey(), data));
+                handler.onFailure();
+            }
+
+            handler.onSuccess(true);
+        });
+    }
+
+    public static void deleteFromFirebase(DatabaseReference collection, Response handler) throws Exception {
+        collection.setValue(null).addOnCompleteListener(task -> {
+            if(!task.isSuccessful()) {
+                System.out.println(String.format("Failed to delete value: %s", collection.getKey()));
+                handler.onFailure();
+            }
+
+            handler.onSuccess(true);
+        });
+    }
 }

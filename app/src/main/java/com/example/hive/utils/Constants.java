@@ -19,4 +19,9 @@ public class Constants {
         COLD,
         WARM
     }
+
+    public static enum Status {
+        AVAILABLE,
+        DO_NOT_DISTURB
+    }
 }
