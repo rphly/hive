@@ -1,8 +1,6 @@
 package com.example.hive.services;
 
-import java.util.Map;
-
-public interface Response {
-    void onSuccess(Map data);
+public interface Response<T> {
+    void onSuccess(T data);
     void onFailure();
 }

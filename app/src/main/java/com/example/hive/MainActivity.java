@@ -10,14 +10,15 @@ import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.MapActivity;
 import com.example.hive.activities.QR.QRCodeScanner;
 import com.example.hive.activities.SignIn;
+import com.example.hive.models.Desk;
 import com.example.hive.services.DeskService;
-import com.example.hive.utils.AuthenticatedActivity;
 import com.example.hive.services.Response;
+import com.example.hive.utils.AuthenticatedActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MainActivity extends AuthenticatedActivity {
 
@@ -78,11 +79,12 @@ public class MainActivity extends AuthenticatedActivity {
         Button testBtn = findViewById(R.id.testBtn);
         testBtn.setText("Test");
         testBtn.setOnClickListener((View v) -> {
-            DeskService.getDeskById("1", new Response() {
+            DeskService.getAllDesks(new Response() {
 
                 @Override
-                public void onSuccess(Map data) {
-                    System.out.println(data.toString());
+                public void onSuccess(Object data) {
+                    ArrayList<Desk> desks = Desk.fromObjects(data);
+                    desks.removeIf(d -> !d.getCurrentUserId().isEmpty());
                 }
 
                 @Override
