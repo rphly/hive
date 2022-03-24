@@ -16,7 +16,10 @@ import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.hive.utils.Debouncer;
+
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -75,6 +78,9 @@ public class FragmentMap extends Fragment {
 
         mapFrame.addView(b1, buttonParams);
 
+        // create debouncer
+        Debouncer debouncer = new Debouncer();
+
 
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
         {
@@ -116,7 +122,7 @@ public class FragmentMap extends Fragment {
                         }
 
                         // scrolling to right side of image (pic moving to the left)
-                        if (currentX < downX)
+                        else if (currentX < downX)
                         {
                             if (totalX == maxRight)
                             {
@@ -134,7 +140,7 @@ public class FragmentMap extends Fragment {
                         }
 
                         // scrolling to top of image (pic moving to the bottom)
-                        if (currentY > downY)
+                        else if (currentY > downY)
                         {
                             if (totalY == maxTop)
                             {
@@ -152,7 +158,7 @@ public class FragmentMap extends Fragment {
                         }
 
                         // scrolling to bottom of image (pic moving to the top)
-                        if (currentY < downY)
+                        else if (currentY < downY)
                         {
                             if (totalY == maxBottom)
                             {
