@@ -1,9 +1,10 @@
 package com.example.hive.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 
-import com.example.hive.BuildConfig;
 import com.example.hive.R;
 import com.example.hive.services.Lifx;
 import com.example.hive.utils.AuthenticatedActivity;
@@ -19,17 +20,23 @@ import java.util.concurrent.TimeUnit;
 public class GestureRemote extends AuthenticatedActivity {
     private int IS_SHAKING = 0;
     final Debouncer debouncer;
-    final Lifx LifxService;
+    Lifx LifxService;
     private Constants.Temperature currentTemp = Constants.Temperature.WARM;
 
-    public GestureRemote() throws Exception {
+    public GestureRemote() {
          debouncer = new Debouncer();
-         LifxService = Lifx.getInstance(BuildConfig.LIFX_API_KEY);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String key = preferences.getString("LIFX_API_KEY", null);
+        try {
+            LifxService = Lifx.getInstance(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // setup gesture listeners
         setupGestureListeners();
         setContentView(R.layout.activity_gesture_remote);

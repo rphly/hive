@@ -10,6 +10,10 @@ public class DeskService extends BaseService {
         getFromFirebase(collection.child(id), handler);
     }
 
+    public static void getDeskAuthFromQR(String qrStr, Response handler) {
+        getFromFirebase(FirebaseDatabase.getInstance().getReference().child("DeskAuth").child(qrStr), handler);
+    }
+
     public static void signInToDesk(String id, String currentUserId, Response handler) {
         try {
             writeToFirebase(collection.child(id).child("current_user"), currentUserId, handler);
