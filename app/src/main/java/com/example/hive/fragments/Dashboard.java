@@ -1,13 +1,20 @@
 package com.example.hive.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.hive.MainActivity;
 import com.example.hive.R;
+import com.example.hive.activities.GestureRemote;
+import com.example.hive.activities.QR.QRCodeScanner;
+import com.example.hive.activities.SignIn;
 import com.example.hive.models.Desk;
 import com.example.hive.models.User;
 import com.example.hive.services.DeskService;
@@ -28,6 +35,9 @@ public class Dashboard extends Fragment {
     private FirebaseAuth firebase;
     private User currentUser;
     private Desk currentDesk;
+    private String currentUserId;
+    private TextView welcomeMsg, currentDeskMsg, deskSignOutTextButton;
+    private Button dashboardButton;
 
     public Dashboard() {
         isLoadingDesks = true;
@@ -40,12 +50,23 @@ public class Dashboard extends Fragment {
         return fragment;
     }
 
-    public void getUserById(String currentUserId) {
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(), SignIn.class);
+        getActivity().finishAffinity();
+        this.startActivity(intent);
+    }
+
+    public void getUserById() {
         UserService.getUserById(currentUserId, new Response() {
             @Override
             public void onSuccess(Object data) {
-                currentUser = (User.fromObject(data));
+                currentUser = User.fromObject(data);
                 isLoadingDesks = false;
+
+                if (welcomeMsg != null) {
+                    welcomeMsg.setText(String.format("Welcome, %s", currentUser.getFirstName()));
+                }
             }
 
             @Override
@@ -56,16 +77,12 @@ public class Dashboard extends Fragment {
         });
     }
 
-    public void getDeskByUser(String currentUserId) {
+    public void getDeskByUserId() {
         DeskService.getAllDesks(new Response() {
             @Override
             public void onSuccess(Object data) {
                 ArrayList<Desk> desks = Desk.fromObjects(data);
-                desks.removeIf(d -> d.getCurrentUserId() != currentUserId);
-                if (desks.size() > 0) {
-                    currentDesk = desks.get(0);
-                }
-
+                setDeskDashboardUI(desks);
                 isLoadingDesks = false;
             }
 
@@ -77,16 +94,54 @@ public class Dashboard extends Fragment {
         });
     }
 
+    public void setDeskDashboardUI(ArrayList<Desk> desks) {
+        desks.removeIf(d -> !d.getCurrentUserId().equals(currentUserId));
+        if (desks.size() > 0) {
+            currentDesk = desks.get(0);
+            if (currentDeskMsg != null) {
+                currentDeskMsg.setText(String.format("You are currently assigned to Desk %s.", currentDesk.getLabel()));
+            }
+            dashboardButton.setText("Gesture Remote");
+            dashboardButton.setOnClickListener(l -> {
+                startActivity(new Intent(getActivity(), GestureRemote.class));
+            });
+
+            if (deskSignOutTextButton != null) {
+                deskSignOutTextButton.setOnClickListener(l -> {
+                    currentDesk.signOut(new Response() {
+                        @Override
+                        public void onSuccess(Object data) {
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            getActivity().finish();
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+                    });
+                });
+                deskSignOutTextButton.setVisibility(View.VISIBLE);
+            }
+        } else {
+            dashboardButton.setText("Scan a Desk QR");
+            dashboardButton.setOnClickListener(l -> {
+                startActivity(new Intent(getActivity(), QRCodeScanner.class));
+            });
+        }
+        dashboardButton.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String currentUserId = firebase.getCurrentUser().getUid();
+        currentUserId = firebase.getCurrentUser().getUid();
 
         // get current user
-        getUserById(currentUserId);
+        getUserById();
 
         // check if user has a desk
-        getDeskByUser(currentUserId);
+        getDeskByUserId();
 
     }
 
@@ -95,5 +150,23 @@ public class Dashboard extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        welcomeMsg = view.findViewById(R.id.welcome_message);
+        currentDeskMsg = view.findViewById(R.id.current_desk_message);
+        dashboardButton = view.findViewById(R.id.dashboardCTA);
+        deskSignOutTextButton = view.findViewById(R.id.desk_sign_out);
+
+        dashboardButton.setVisibility(View.INVISIBLE);
+        deskSignOutTextButton.setVisibility(View.INVISIBLE);
+
+        // signOut button
+        Button signOutBtn = view.findViewById(R.id.sign_out);
+        signOutBtn.setText("Sign Out");
+        signOutBtn.setOnClickListener((View v) -> signOut());
+
     }
 }

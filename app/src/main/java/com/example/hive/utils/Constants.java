@@ -24,4 +24,5 @@ public class Constants {
         AVAILABLE,
         DO_NOT_DISTURB
     }
+
 }
