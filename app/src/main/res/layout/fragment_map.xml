@@ -53,17 +53,6 @@
 
 
     </RelativeLayout>
-
-
-    <!--    <View-->
-<!--        android:id="@+id/usermap"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="#fff"-->
-<!--        android:scaleType="center"-->
-<!--        android:src="@drawable/theofficemap"-->
-<!--        android:contentDescription="@string/User1" />-->
-
 </FrameLayout>
 
 

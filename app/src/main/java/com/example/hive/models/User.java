@@ -28,8 +28,8 @@ public class User {
 
     public static User fromObject(Object obj) {
         Map data = (Map) obj;
-        String firstName = (String) data.get("first_name");
-        String lastName = (String) data.get("last_name");
+        String firstName = (String) data.get("firstName");
+        String lastName = (String) data.get("lastName");
         String email = (String) data.get("email");
         String id = String.valueOf(data.get("id"));
 

@@ -1,4 +1,4 @@
-package com.example.hive;
+package com.example.hive.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
@@ -16,10 +16,9 @@ import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.hive.utils.Debouncer;
+import com.example.hive.R;
 
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -47,17 +46,18 @@ public class FragmentMap extends Fragment {
         //get the size of the image and  the screen
         int bitmapWidth = bDrawable.getIntrinsicWidth();
         int bitmapHeight = bDrawable.getIntrinsicHeight();
+        @SuppressLint("UseRequireInsteadOfGet")
         int screenWidth = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getWidth();
-        int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = (int) (getActivity().getWindowManager().getDefaultDisplay().getHeight() * 0.5);
 
         // set maximum scroll amount (based on center of image)
         int maxX = (bitmapWidth / 2) - (screenWidth / 2);
         int maxY = (bitmapHeight / 2) - (screenHeight / 2);
 
         // set scroll limits
-        final int maxLeft = (maxX * -1);
+        final int maxLeft = -maxX;
         final int maxRight = maxX;
-        final int maxTop = (maxY * -1);
+        final int maxTop = -maxY;
         final int maxBottom = maxY;
 
         //Set up user buttons and the user map overlay
@@ -77,10 +77,6 @@ public class FragmentMap extends Fragment {
         buttonParams.topMargin = 0;
 
         mapFrame.addView(b1, buttonParams);
-
-        // create debouncer
-        Debouncer debouncer = new Debouncer();
-
 
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
         {
