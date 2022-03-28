@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.example.hive.models.Desk;
 import com.example.hive.services.DeskService;
 import androidx.fragment.app.Fragment;
 
@@ -69,7 +70,7 @@ public class FragmentMap extends Fragment {
         mapRelativeLayout.setLayoutParams(mapLayoutParams1);
 
         //Get Desk
-        //TO DO
+//        Desk testDesk1 = DeskService.getDeskById(1, );
 
         // test button
         Button b1 = new Button(mapRelativeLayout.getContext());
