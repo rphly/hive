@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.example.hive.services.DeskService;
 import androidx.fragment.app.Fragment;
 
 import com.example.hive.R;
@@ -69,6 +70,9 @@ public class FragmentMap extends Fragment {
 
         // https://stackoverflow.com/questions/18655940/linearlayoutlayoutparams-cannot-be-cast-to-android-widget-framelayoutlayoutpar
         mapRelativeLayout.setLayoutParams(mapLayoutParams1);
+
+        //Get Desk
+        //TO DO
 
         // test button
         Button b1 = new Button(mapRelativeLayout.getContext());
