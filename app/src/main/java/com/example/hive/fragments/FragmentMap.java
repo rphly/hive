@@ -72,6 +72,7 @@ public class FragmentMap extends Fragment {
         mapRelativeLayout.setLayoutParams(mapLayoutParams1);
 
 
+
         // test button
         Button b1 = new Button(mapRelativeLayout.getContext());
         b1.setAlpha(1.0F);
