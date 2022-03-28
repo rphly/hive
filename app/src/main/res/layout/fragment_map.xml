@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="#fff"
         android:contentDescription="@string/User1"
+        android:layout_gravity="center"
         android:scaleType="center"
         android:src="@drawable/theofficemap" />
 
