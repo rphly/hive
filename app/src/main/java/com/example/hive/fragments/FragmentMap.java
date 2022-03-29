@@ -32,14 +32,15 @@ public class FragmentMap extends Fragment {
     // either dynamically or via XML layout inflation.
 
     public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight) {
+        //puts a button the specified relative layout
         Button b1 = new Button(relLayout.getContext());
         b1.setAlpha(1.0F);
         b1.setText("Desk" + deskID);
-
+        //Set the button params, the position of it in its parent relative layout
         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        buttonParams.leftMargin = (int) Math.round(x/100.0 * mapWidth); //map width is the width of the image
+        buttonParams.leftMargin = (int) Math.round(x/100.0 * mapWidth); //map width is the width of the image, in pixels
         buttonParams.topMargin = (int) Math.round(y/100.0 * mapWidth);
         String location = "(" + x + "," + y + ")";
         b1.setText(location);
@@ -93,7 +94,7 @@ public class FragmentMap extends Fragment {
         mapRelativeLayout.setLayoutParams(mapLayoutParams1);
 
         //Get Desk
-//        Desk testDesk1 = DeskService.getDeskById(1, );
+        // onSuccess, will use makeButton to add in the user
         String deskID2 = "2";
         DeskService.getDeskById(deskID2, new Response() {
             @Override
