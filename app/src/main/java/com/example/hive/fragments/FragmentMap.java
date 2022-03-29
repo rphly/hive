@@ -1,11 +1,13 @@
-package com.example.hive;
+package com.example.hive.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,11 +21,31 @@ import com.example.hive.models.Desk;
 import com.example.hive.services.DeskService;
 import androidx.fragment.app.Fragment;
 
+import com.example.hive.R;
+import com.example.hive.services.Response;
+
+import java.util.Map;
 import java.util.Objects;
 
 public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
+
+    public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight) {
+        Button b1 = new Button(relLayout.getContext());
+        b1.setAlpha(1.0F);
+        b1.setText("Desk" + deskID);
+
+        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        buttonParams.leftMargin = (int) Math.round(x/100.0 * mapWidth); //map width is the width of the image
+        buttonParams.topMargin = (int) Math.round(y/100.0 * mapWidth);
+        String location = "(" + x + "," + y + ")";
+        b1.setText(location);
+        relLayout.addView(b1, buttonParams); //add the button
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -47,17 +69,18 @@ public class FragmentMap extends Fragment {
         //get the size of the image and  the screen
         int bitmapWidth = bDrawable.getIntrinsicWidth();
         int bitmapHeight = bDrawable.getIntrinsicHeight();
+        @SuppressLint("UseRequireInsteadOfGet")
         int screenWidth = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getWidth();
-        int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = (int) (getActivity().getWindowManager().getDefaultDisplay().getHeight() * 0.5);
 
         // set maximum scroll amount (based on center of image)
         int maxX = (bitmapWidth / 2) - (screenWidth / 2);
         int maxY = (bitmapHeight / 2) - (screenHeight / 2);
 
         // set scroll limits
-        final int maxLeft = (maxX * -1);
+        final int maxLeft = -maxX;
         final int maxRight = maxX;
-        final int maxTop = (maxY * -1);
+        final int maxTop = -maxY;
         final int maxBottom = maxY;
 
         //Set up user buttons and the user map overlay
@@ -71,20 +94,23 @@ public class FragmentMap extends Fragment {
 
         //Get Desk
 //        Desk testDesk1 = DeskService.getDeskById(1, );
+        String deskID2 = "2";
+        DeskService.getDeskById(deskID2, new Response() {
+            @Override
+            public void onSuccess(Object data) {
+                Map data2= (Map) data;
+                System.out.println(data2.toString());
+                int button_x = (int) (long) data2.get("location_x"); //idk why but apparently firebase gives long
+                int button_y = (int) (long) data2.get("location_y");
+                makeButton(button_x, button_y, deskID2, mapRelativeLayout, bitmapWidth, bitmapHeight);
+            }
+            @Override
+            public void onFailure() {
+                System.out.println("Failed to load: " + deskID2 );
+            }
+        });
 
         // test button
-        Button b1 = new Button(mapRelativeLayout.getContext());
-        b1.setAlpha(1.0F);
-        b1.setText("BtnTest");
-
-        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        buttonParams.rightMargin = 0;
-        buttonParams.topMargin = 0;
-        String location = "(" + b1.getX() + "," + b1.getY() + ")";
-        b1.setText(location);
-        mapRelativeLayout.addView(b1, buttonParams);
 
 
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
@@ -127,7 +153,7 @@ public class FragmentMap extends Fragment {
                         }
 
                         // scrolling to right side of image (pic moving to the left)
-                        if (currentX < downX)
+                        else if (currentX < downX)
                         {
                             if (totalX == maxRight)
                             {
@@ -163,7 +189,7 @@ public class FragmentMap extends Fragment {
                         }
 
                         // scrolling to bottom of image (pic moving to the top)
-                        if (currentY < downY)
+                        else if (currentY < downY)
                         {
                             if (totalY == maxBottom)
                             {
