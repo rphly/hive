@@ -14,7 +14,6 @@ import com.example.hive.MainActivity;
 import com.example.hive.R;
 import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.QR.QRCodeScanner;
-import com.example.hive.activities.SignIn;
 import com.example.hive.models.Desk;
 import com.example.hive.models.User;
 import com.example.hive.services.DeskService;
@@ -48,13 +47,6 @@ public class Dashboard extends Fragment {
     public static Dashboard newInstance() {
         Dashboard fragment = new Dashboard();
         return fragment;
-    }
-
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), SignIn.class);
-        getActivity().finishAffinity();
-        this.startActivity(intent);
     }
 
     public void getUserById() {
@@ -163,10 +155,7 @@ public class Dashboard extends Fragment {
         dashboardButton.setVisibility(View.INVISIBLE);
         deskSignOutTextButton.setVisibility(View.INVISIBLE);
 
-        // signOut button
-        Button signOutBtn = view.findViewById(R.id.sign_out);
-        signOutBtn.setText("Sign Out");
-        signOutBtn.setOnClickListener((View v) -> signOut());
+
 
     }
 }

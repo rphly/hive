@@ -53,7 +53,6 @@ public class QRCodeScanner extends AuthenticatedActivity {
         checkInBtn = findViewById(R.id.checkInBtn);
         checkInBtn.setVisibility(View.INVISIBLE);
         checkInBtn.setOnClickListener((View v) -> {
-            Toast.makeText(getApplicationContext(), qrStr, Toast.LENGTH_SHORT).show();
             Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrStr);
             getDeskAuthFromQR(qrStr, new Response() {
                 @Override

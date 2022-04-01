@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.Map;
+
 public class BaseService {
 
     /**
@@ -32,6 +34,21 @@ public class BaseService {
         collection.setValue(data).addOnCompleteListener(task -> {
             if(!task.isSuccessful()) {
                 System.out.println(String.format("Failed to set value: %s <- %s", collection.getKey(), data));
+                handler.onFailure();
+            }
+
+            handler.onSuccess(true);
+        });
+    }
+
+    public static void updateFirebase(DatabaseReference collection, Map data, Response handler) throws Exception {
+        if (data == null) {
+            throw new Exception("ABORT: attempted to set null data");
+        }
+
+        collection.updateChildren(data).addOnCompleteListener(task -> {
+            if(!task.isSuccessful()) {
+                System.out.println(String.format("Failed to update value: %s <- %s", collection.getKey(), data));
                 handler.onFailure();
             }
 

@@ -51,11 +51,7 @@
                     android:textSize="15dp"
                     android:textColor="#D2232A"
                     android:clickable="true"/>
-            <Button
-                android:id="@+id/sign_out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="20dp"/>
+
         </LinearLayout>
     </LinearLayout>
 
