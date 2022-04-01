@@ -4,25 +4,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.Home">
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:weightSum="100">
+        >
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_map_view"
             android:name="com.example.hive.fragments.FragmentMap"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="40"/>
+            android:layout_height="0px"
+            android:layout_weight="2"/>
 
         <androidx.fragment.app.FragmentContainerView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/fragment_dashboard_view"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="1.2"
             android:name="com.example.hive.fragments.Dashboard" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/searchResultsView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="invisible"
+        android:paddingTop="80dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10px"
+        >
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_height="wrap_content"
+            android:layout_width="0px"
+            android:ems="10"
+            android:drawableLeft="@drawable/search_icon"
+            android:hint="Search"
+            android:inputType="textPersonName"
+            android:imeOptions="actionSearch"
+            android:elevation="10dp"
+            android:background="@drawable/stadium_border"
+            android:padding="10px"
+            android:layout_weight="3"
+
+            />
+        <Button
+            android:id="@+id/cancelSearchBtn"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_weight="0"
+            android:background="@android:color/transparent"
+            android:text="Cancel"
+            android:textColor="@color/black"
+            android:padding="10px"
+            />
     </LinearLayout>
 
 </FrameLayout>
