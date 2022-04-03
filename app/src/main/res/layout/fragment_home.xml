@@ -45,7 +45,7 @@
             android:layout_width="0px"
             android:ems="10"
             android:drawableLeft="@drawable/search_icon"
-            android:hint="Search"
+            android:hint="Find your teammates"
             android:inputType="textPersonName"
             android:imeOptions="actionSearch"
             android:elevation="10dp"
