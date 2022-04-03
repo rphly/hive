@@ -42,15 +42,15 @@
                     app:iconGravity="start"
                     app:iconSize="10dp" />
 
-                <TextView
+                <Button
                     android:id="@+id/desk_sign_out"
                     android:textAlignment="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Sign out of desk"
-                    android:textSize="15dp"
-                    android:textColor="#D2232A"
-                    android:clickable="true"/>
+
+                    android:padding="10dp"
+                    />
 
         </LinearLayout>
     </LinearLayout>

@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10sp"
-                android:text="Please scan the QR code on your reserved table to check in."
+                android:text="Please scan the QR code to reserve a table."
                 />
             <LinearLayout
                 android:layout_width="match_parent"

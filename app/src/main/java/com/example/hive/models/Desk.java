@@ -46,7 +46,6 @@ public class Desk {
         String currentUserId = (String) data.get("current_user");
         String id = String.valueOf(data.get("id"));
         int timeCheckedIn = Integer.valueOf(String.valueOf(data.get("time_checked_in")));;
-
         Desk desk = new Desk(id, currentUserId, lightToken, label, x, y, timeCheckedIn);
         return desk;
     }
