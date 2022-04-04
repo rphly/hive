@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -77,7 +78,7 @@ public class Home extends Fragment {
                         UserService.getAllUsers(new Response() {
                             @Override
                             public void onSuccess(Object data) {
-                                users = User.fromObjects(data);
+                                users = User.fromObject(data);
                                 adapter.setData(users);
                                 adapter.notifyDataSetChanged();
                             }
