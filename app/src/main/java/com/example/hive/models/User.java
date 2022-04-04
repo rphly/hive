@@ -5,8 +5,11 @@ import com.example.hive.utils.Constants;
 import java.util.Map;
 
 public class User {
-    private String firstName, lastName, email, id;
-    private Constants.Status status;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String id;
+    private final Constants.Status status;
 
     public User(String id, String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -33,7 +36,6 @@ public class User {
         String email = (String) data.get("email");
         String id = String.valueOf(data.get("id"));
 
-        User user = new User(id, firstName, lastName, email);
-        return user;
+        return new User(id, firstName, lastName, email);
     }
 }
