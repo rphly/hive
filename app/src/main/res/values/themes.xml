@@ -3,7 +3,7 @@
     <style name="Theme.Hive" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/button_color</item>
         <item name="colorPrimaryVariant">@color/background_color</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
