@@ -37,11 +37,12 @@
             android:alpha="1.0"
             android:contentDescription="@string/User2"
             android:text="@string/User2"
+            android:backgroundTint="#392d35"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/User1"
-            android:layout_width="72dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -49,6 +50,7 @@
             android:layout_marginTop="263dp"
             android:contentDescription="@string/User1"
             android:text="@string/User1"
+            android:backgroundTint="#392d35"
             tools:ignore="SpeakableTextPresentCheck" />
 
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#efe9e5"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Me">
     <LinearLayout
@@ -16,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             >
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="75dp"
@@ -33,20 +35,28 @@
 
         </LinearLayout>
         <TextView
-        android:id="@+id/profile_fullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:id="@+id/profile_fullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="5dp"
         />
 
     <TextView
         android:id="@+id/profile_currentStatus"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="5dp"
         />
     <TextView
         android:id="@+id/profile_email"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="5dp"
         />
 
     <Button
@@ -54,6 +64,8 @@
         android:layout_marginVertical="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#392d35"
+        android:layout_gravity="center"
         />
 
     </LinearLayout>
