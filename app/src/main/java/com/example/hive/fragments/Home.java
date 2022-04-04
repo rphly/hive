@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 public class Home extends Fragment {
     EditText searchBar;
     RecyclerView searchResults;
+    FrameLayout home;
     Button cancelSearchBtn;
     ArrayList<User> users = new ArrayList<>();
     ArrayList<User> tmpUsers = new ArrayList<>();
@@ -54,9 +56,12 @@ public class Home extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        home = view.findViewById(R.id.home);
         searchBar = view.findViewById(R.id.searchBar);
         cancelSearchBtn = view.findViewById(R.id.cancelSearchBtn);
+
         searchResults = view.findViewById(R.id.searchResultsView);
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -84,12 +89,12 @@ public class Home extends Fragment {
 
                             @Override
                             public void onFailure() {
-
                             }
                         });
 
                         params.weight = 1;
                         Helpers.slideViewUp(searchResults);
+
                     }
                     cancelSearchBtn.setLayoutParams(params);
                 }
@@ -117,6 +122,8 @@ public class Home extends Fragment {
         }
 
         cancelSearchBtn.setOnClickListener(l -> {
+            adapter.setData(new ArrayList<User>());
+            adapter.notifyDataSetChanged();
             Helpers.slideViewDown(searchResults);
             params.weight = 0;
             cancelSearchBtn.setLayoutParams(params);
