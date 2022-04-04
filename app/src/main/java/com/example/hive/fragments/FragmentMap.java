@@ -31,6 +31,7 @@ public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
 
+    @SuppressLint("SetTextI18n")
     public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight) {
         //puts a button the specified relative layout
         Button b1 = new Button(relLayout.getContext());
