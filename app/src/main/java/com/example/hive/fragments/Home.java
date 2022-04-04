@@ -78,7 +78,7 @@ public class Home extends Fragment {
                         UserService.getAllUsers(new Response() {
                             @Override
                             public void onSuccess(Object data) {
-                                users = User.fromObject(data);
+                                users = User.fromObjects(data);
                                 adapter.setData(users);
                                 adapter.notifyDataSetChanged();
                             }

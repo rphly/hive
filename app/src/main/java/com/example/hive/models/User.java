@@ -2,6 +2,8 @@ package com.example.hive.models;
 
 import com.example.hive.utils.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -37,5 +39,17 @@ public class User {
         String id = String.valueOf(data.get("id"));
 
         return new User(id, firstName, lastName, email);
+    }
+
+    public static ArrayList<User> fromObjects(Object obj) {
+        Map raw = (Map) obj;
+        List<Object> list = new ArrayList<Object>(raw.values());
+        ArrayList data = new ArrayList<User>();
+        for (Object o: list) {
+            if (o != null) {
+                data.add(User.fromObject(o));
+            }
+        }
+        return data;
     }
 }
