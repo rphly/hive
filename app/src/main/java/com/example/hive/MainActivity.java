@@ -65,9 +65,7 @@ public class MainActivity extends AuthenticatedActivity {
         // set to_qr button
         Button gestureRemoteBtn = (Button)findViewById(R.id.gesture_remote);
         gestureRemoteBtn.setText("Gesture Remote");
-        gestureRemoteBtn.setOnClickListener((View v) -> {
-            onNavigateToGestureRemote();
-        });
+        gestureRemoteBtn.setOnClickListener((View v) -> onNavigateToGestureRemote());
 
         // map button
         Button btnMap = findViewById(R.id.go_to_map);
@@ -82,27 +80,25 @@ public class MainActivity extends AuthenticatedActivity {
         // test button
         Button testBtn = findViewById(R.id.testBtn);
         testBtn.setText("Test");
-        testBtn.setOnClickListener((View v) -> {
-            DeskService.getDeskById("1", new Response() {
+        testBtn.setOnClickListener((View v) -> DeskService.getDeskById("1", new Response() {
 
 
 
-                @Override
-                public void onSuccess(Object data) {
-                    Map data2= (Map) data;
-                    System.out.println(data2.toString());
-                }
+            @Override
+            public void onSuccess(Object data) {
+                Map data2= (Map) data;
+                System.out.println(data2.toString());
+            }
 
-                public void onSuccess(Map data) {
-                    System.out.println(data.toString());
-                }
+            public void onSuccess(Map data) {
+                System.out.println(data.toString());
+            }
 
-                @Override
-                public void onFailure() {
-                    System.out.println("Failwhale");
-                }
-            });
-        });
+            @Override
+            public void onFailure() {
+                System.out.println("Failwhale");
+            }
+        }));
     }
 
 }
