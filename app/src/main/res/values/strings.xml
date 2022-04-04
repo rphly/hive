@@ -9,6 +9,7 @@
     <string name="nav_light">Light Control</string>
     <string name="nav_focus">Focus Mode</string>
     <string name="sign_out">Sign Out</string>
+    <string name="mapoverlay">MapOverlay</string>
 
     // Dashboard
 

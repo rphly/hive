@@ -5,7 +5,7 @@
     tools:context=".MainActivity"
     android:orientation="horizontal">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fooFragment"
         android:name="com.example.hive.fragments.FragmentMap"
         android:layout_width="match_parent"
