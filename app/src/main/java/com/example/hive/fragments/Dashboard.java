@@ -14,7 +14,6 @@ import com.example.hive.MainActivity;
 import com.example.hive.R;
 import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.QR.QRCodeScanner;
-import com.example.hive.activities.SignIn;
 import com.example.hive.models.Desk;
 import com.example.hive.models.User;
 import com.example.hive.services.DeskService;
@@ -36,8 +35,8 @@ public class Dashboard extends Fragment {
     private User currentUser;
     private Desk currentDesk;
     private String currentUserId;
-    private TextView welcomeMsg, currentDeskMsg, deskSignOutTextButton;
-    private Button dashboardButton;
+    private TextView welcomeMsg, currentDeskMsg;
+    private Button dashboardButton, deskSignOutButton;
 
     public Dashboard() {
         isLoadingDesks = true;
@@ -48,13 +47,6 @@ public class Dashboard extends Fragment {
     public static Dashboard newInstance() {
         Dashboard fragment = new Dashboard();
         return fragment;
-    }
-
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), SignIn.class);
-        getActivity().finishAffinity();
-        this.startActivity(intent);
     }
 
     public void getUserById() {
@@ -106,22 +98,25 @@ public class Dashboard extends Fragment {
                 startActivity(new Intent(getActivity(), GestureRemote.class));
             });
 
-            if (deskSignOutTextButton != null) {
-                deskSignOutTextButton.setOnClickListener(l -> {
+            if (deskSignOutButton != null) {
+                deskSignOutButton.setOnClickListener(l -> {
+                    deskSignOutButton.setEnabled(false);
                     currentDesk.signOut(new Response() {
                         @Override
                         public void onSuccess(Object data) {
+                            deskSignOutButton.setEnabled(true);
                             startActivity(new Intent(getActivity(), MainActivity.class));
                             getActivity().finish();
+
                         }
 
                         @Override
                         public void onFailure() {
-
+                            deskSignOutButton.setEnabled(true);
                         }
                     });
                 });
-                deskSignOutTextButton.setVisibility(View.VISIBLE);
+                deskSignOutButton.setVisibility(View.VISIBLE);
             }
         } else {
             dashboardButton.setText("Scan a Desk QR");
@@ -158,15 +153,11 @@ public class Dashboard extends Fragment {
         welcomeMsg = view.findViewById(R.id.welcome_message);
         currentDeskMsg = view.findViewById(R.id.current_desk_message);
         dashboardButton = view.findViewById(R.id.dashboardCTA);
-        deskSignOutTextButton = view.findViewById(R.id.desk_sign_out);
+        deskSignOutButton = view.findViewById(R.id.desk_sign_out);
 
         dashboardButton.setVisibility(View.INVISIBLE);
-        deskSignOutTextButton.setVisibility(View.INVISIBLE);
+        deskSignOutButton.setVisibility(View.INVISIBLE);
 
-        // signOut button
-        Button signOutBtn = view.findViewById(R.id.sign_out);
-        signOutBtn.setText("Sign Out");
-        signOutBtn.setOnClickListener((View v) -> signOut());
 
     }
 }

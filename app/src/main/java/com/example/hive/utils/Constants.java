@@ -1,5 +1,7 @@
 package com.example.hive.utils;
 
+import android.graphics.Color;
+
 public class Constants {
     // focus mode
     public static final int DEFAULT_FOCUS_MODE = 0;
@@ -25,4 +27,8 @@ public class Constants {
         DO_NOT_DISTURB
     }
 
+    public static class Colors {
+        public static final int red = Color.parseColor("#D2232A");
+        public static final int yellow = Color.parseColor("#EA8000");
+    }
 }
