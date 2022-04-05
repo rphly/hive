@@ -1,14 +1,11 @@
 package com.example.hive.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.example.hive.models.Desk;
 import com.example.hive.models.User;
 import com.example.hive.services.DeskService;
 
@@ -30,7 +26,6 @@ import com.example.hive.services.Response;
 import com.example.hive.services.UserService;
 import com.example.hive.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -91,8 +86,6 @@ public class FragmentMap extends Fragment {
         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        buttonParams.leftMargin = (int) Math.round(x/1000.0 * mapWidth); //map width is the width of the image, in pixels
-        buttonParams.topMargin = (int) Math.round(y/1000.0 * mapHeight);
 
         // set user details
         if (user != null) {
@@ -107,14 +100,23 @@ public class FragmentMap extends Fragment {
 
             //set profile picture
 //            b1.setBackground(this.getResources().getDrawable(R.drawable.user_circle));
+//            b1.setText(x + "," + y + "||" + mapWidth + "," + mapHeight);
+
+
 
             b1.setOnClickListener(l -> {
                 bottomSheet.show(((AppCompatActivity) b1.getContext()).getSupportFragmentManager(), user.getId());
             });
         }
 
+         //add the button
+        // modify to get the actual dp of the button (margin)
+        int buttonWidth = 100;
+        int buttonHeight =20;
+        buttonParams.leftMargin = (int) Math.round((x/1000.0 * mapWidth) - buttonWidth/2); //map width is the width of the image, in pixels
+        buttonParams.topMargin = (int) Math.round((y/1000.0 * mapHeight) - buttonHeight/2);
 
-        relLayout.addView(b1, buttonParams); //add the button
+        relLayout.addView(b1, buttonParams);
     }
 
     @Override
@@ -163,9 +165,20 @@ public class FragmentMap extends Fragment {
         // https://stackoverflow.com/questions/18655940/linearlayoutlayoutparams-cannot-be-cast-to-android-widget-framelayoutlayoutpar
         mapRelativeLayout.setLayoutParams(mapLayoutParams1);
         //get the data for the user buttons and make the buttons
+        //test button
+
         refreshUserButtons(mapRelativeLayout, bitmapWidth, bitmapHeight);
         // test button
-
+        Button b2 = new Button(mapRelativeLayout.getContext());
+        b2.setAlpha(1.0F);
+        b2.setText("CornerDesk");
+        //Set the button params, the position of it in its parent relative layout
+        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        buttonParams.leftMargin = 0; //map width is the width of the image, in pixels
+        buttonParams.topMargin = 0;
+        mapRelativeLayout.addView(b2, buttonParams);
 
         ImageView_BitmapView.setOnTouchListener(new View.OnTouchListener()
         {
