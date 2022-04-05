@@ -30,6 +30,7 @@ import com.example.hive.services.Response;
 import com.example.hive.services.UserService;
 import com.example.hive.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,36 +41,45 @@ public class FragmentMap extends Fragment {
     public void refreshUserButtons(RelativeLayout mapRelativeLayout, int bitmapWidth, int bitmapHeight) {
         //Get Desk
         // onSuccess, will use makeButton to add in the user
-        String deskID2 = "1";
-        DeskService.getDeskById(deskID2, new Response() {
-            @Override
-            public void onSuccess(Object data) {
-                Map data2= (Map) data;
-                System.out.println(data2.toString());
-                final User[] user = new User[1];
-                int button_x = (int) (long) data2.get("location_x"); //idk why but apparently firebase gives long
-                int button_y = (int) (long) data2.get("location_y");
-                UserService.getUserById( String.valueOf(data2.get("current_user")),
-                        new Response() {
-                            @Override
-                            public void onSuccess(Object data) {
-                                user[0] = User.fromObject(data);
-                                makeButton(button_x, button_y, deskID2, mapRelativeLayout, bitmapWidth, bitmapHeight, user[0]);
-                            }
+        String[] deskList = {"1", "2", "3", "4"};
+        for (String deskID : deskList) {
+            DeskService.getDeskById(deskID, new Response() {
+                @Override
+                public void onSuccess(Object data) {
+                    Map data2= (Map) data;
+                    System.out.println(data2.toString());
+                    final User[] user = new User[1];
+                    int button_x = (int) (long) data2.get("location_x"); //idk why but apparently firebase gives long
+                    int button_y = (int) (long) data2.get("location_y");
+                    String currentUser = (String) data2.get("current_user");
+                    if ( currentUser != null && !currentUser.isEmpty()) {
+                        UserService.getUserById( String.valueOf(data2.get("current_user")),
+                                new Response() {
+                                    @Override
+                                    public void onSuccess(Object data) {
+                                        user[0] = User.fromObject(data);
+                                        makeButton(button_x, button_y, deskID, mapRelativeLayout, bitmapWidth, bitmapHeight, user[0]);
+                                    }
 
-                            @Override
-                            public void onFailure() {
-                                System.out.println("Failed to get User for desk");
-                            }
-                        });
+                                    @Override
+                                    public void onFailure() {
+                                        System.out.println("Failed to get User for desk");
+                                    }
+                                });
+                    } else {
+                        //no user, make empty desk
+//                        makeButton();
+                    }
 
 
-            }
-            @Override
-            public void onFailure() {
-                System.out.println("Failed to load: " + deskID2 );
-            }
-        });
+
+                }
+                @Override
+                public void onFailure() {
+                    System.out.println("Failed to load: " + deskID );
+                }
+            });
+        }
     }
 
     public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight, User user) {
@@ -81,8 +91,8 @@ public class FragmentMap extends Fragment {
         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        buttonParams.leftMargin = (int) Math.round(x/100.0 * mapWidth); //map width is the width of the image, in pixels
-        buttonParams.topMargin = (int) Math.round(y/100.0 * mapWidth);
+        buttonParams.leftMargin = (int) Math.round(x/1000.0 * mapWidth); //map width is the width of the image, in pixels
+        buttonParams.topMargin = (int) Math.round(y/1000.0 * mapHeight);
 
         // set user details
         if (user != null) {
@@ -96,7 +106,7 @@ public class FragmentMap extends Fragment {
             bottomSheet.setArguments(args);
 
             //set profile picture
-            b1.setBackground(Drawable.createFromPath("@drawable/user_circle"));
+//            b1.setBackground(this.getResources().getDrawable(R.drawable.user_circle));
 
             b1.setOnClickListener(l -> {
                 bottomSheet.show(((AppCompatActivity) b1.getContext()).getSupportFragmentManager(), user.getId());
