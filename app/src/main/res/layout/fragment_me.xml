@@ -3,58 +3,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFE9E5"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Me">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20px"
-        >
+        android:padding="20px">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
+            android:gravity="center_horizontal">
+
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 app:cardCornerRadius="50dp">
+
                 <ImageButton
-                    android:background="@drawable/user_circle"
+                    android:id="@+id/profile_pic"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/profile_pic"
-                    android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
-                    />
+                    android:background="@drawable/user_circle"
+                    android:scaleType="centerCrop" />
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/profile_fullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/rosario"
+            android:textSize="20sp"/>
+
         <TextView
-        android:id="@+id/profile_fullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+            android:id="@+id/profile_currentStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/rosario"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/profile_currentStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/profile_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        <EditText
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/rosario"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_marginVertical="10dp"
+        <EditText
+            android:id="@+id/profile_bio"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/rosario"
+            android:gravity="top"
+            android:hint="What are you working on?" />
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/editProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#392D35"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:id="@+id/saveEdits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#392D35"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginVertical="1dp"
+            android:backgroundTint="#392D35" />
+    </RelativeLayout>
 
     </LinearLayout>
 
