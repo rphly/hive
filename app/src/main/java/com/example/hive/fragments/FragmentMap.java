@@ -18,11 +18,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.hive.models.Desk;
+import com.example.hive.models.User;
 import com.example.hive.services.DeskService;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.hive.R;
 import com.example.hive.services.Response;
+import com.example.hive.services.UserService;
+import com.example.hive.utils.Constants;
 
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +36,42 @@ public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
 
-    public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight) {
+    public void refreshUserButtons(RelativeLayout mapRelativeLayout, int bitmapWidth, int bitmapHeight) {
+        //Get Desk
+        // onSuccess, will use makeButton to add in the user
+        String deskID2 = "1";
+        DeskService.getDeskById(deskID2, new Response() {
+            @Override
+            public void onSuccess(Object data) {
+                Map data2= (Map) data;
+                System.out.println(data2.toString());
+                final User[] user = new User[1];
+                int button_x = (int) (long) data2.get("location_x"); //idk why but apparently firebase gives long
+                int button_y = (int) (long) data2.get("location_y");
+                UserService.getUserById( String.valueOf(data2.get("current_user")),
+                        new Response() {
+                            @Override
+                            public void onSuccess(Object data) {
+                                user[0] = User.fromObject(data);
+                                makeButton(button_x, button_y, deskID2, mapRelativeLayout, bitmapWidth, bitmapHeight, user[0]);
+                            }
+
+                            @Override
+                            public void onFailure() {
+                                System.out.println("Failed to get User for desk");
+                            }
+                        });
+
+
+            }
+            @Override
+            public void onFailure() {
+                System.out.println("Failed to load: " + deskID2 );
+            }
+        });
+    }
+
+    public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight, User user) {
         //puts a button the specified relative layout
         Button b1 = new Button(relLayout.getContext());
         b1.setAlpha(1.0F);
@@ -44,6 +84,24 @@ public class FragmentMap extends Fragment {
         buttonParams.topMargin = (int) Math.round(y/100.0 * mapWidth);
         String location = "(" + x + "," + y + ")";
         b1.setText(location);
+
+        // set user details
+        if (user != null) {
+            b1.setText(user.getFirstName());
+            UserDetailsBottomSheet bottomSheet = new UserDetailsBottomSheet();
+            Bundle args = new Bundle();
+            args.putString("id", user.getId());
+            args.putString("fullName", user.getFullName());
+            args.putString("email", user.getEmail());
+            args.putInt("status", user.getStatus().equals(Constants.Status.AVAILABLE) ? 1 : 0);
+            bottomSheet.setArguments(args);
+
+            b1.setOnClickListener(l -> {
+                bottomSheet.show(((AppCompatActivity) b1.getContext()).getSupportFragmentManager(), user.getId());
+            });
+        }
+
+
         relLayout.addView(b1, buttonParams); //add the button
     }
 
@@ -92,25 +150,8 @@ public class FragmentMap extends Fragment {
 
         // https://stackoverflow.com/questions/18655940/linearlayoutlayoutparams-cannot-be-cast-to-android-widget-framelayoutlayoutpar
         mapRelativeLayout.setLayoutParams(mapLayoutParams1);
-
-        //Get Desk
-        // onSuccess, will use makeButton to add in the user
-        String deskID2 = "2";
-        DeskService.getDeskById(deskID2, new Response() {
-            @Override
-            public void onSuccess(Object data) {
-                Map data2= (Map) data;
-                System.out.println(data2.toString());
-                int button_x = (int) (long) data2.get("location_x"); //idk why but apparently firebase gives long
-                int button_y = (int) (long) data2.get("location_y");
-                makeButton(button_x, button_y, deskID2, mapRelativeLayout, bitmapWidth, bitmapHeight);
-            }
-            @Override
-            public void onFailure() {
-                System.out.println("Failed to load: " + deskID2 );
-            }
-        });
-
+        //get the data for the user buttons and make the buttons
+        refreshUserButtons(mapRelativeLayout, bitmapWidth, bitmapHeight);
         // test button
 
 
@@ -218,5 +259,17 @@ public class FragmentMap extends Fragment {
                 return true;
             }
         });
+
+//        // setup update handler
+//        final Handler handler = new Handler();
+//        final int delayMs = 2000;
+//
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                updateLight();
+//                handler.postDelayed(this, delayMs);
+//            }
+//        }, delayMs);
+
     }
 }
