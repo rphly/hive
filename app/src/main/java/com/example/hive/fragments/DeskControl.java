@@ -24,6 +24,8 @@ import com.example.hive.models.Light;
 import com.example.hive.services.DeskService;
 import com.example.hive.services.Lifx;
 import com.example.hive.services.Response;
+import com.example.hive.services.UserService;
+import com.example.hive.utils.Constants;
 import com.example.hive.utils.Debouncer;
 import com.github.nisrulz.sensey.FlipDetector;
 import com.github.nisrulz.sensey.Sensey;
@@ -44,6 +46,7 @@ public class DeskControl extends Fragment {
     Desk currentDesk;
     Debouncer debouncer = new Debouncer();
     boolean isLoaded = false; // only applies for first load
+    String userId;
 
     private Handler handler;
     Runnable runnable;
@@ -66,7 +69,6 @@ public class DeskControl extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         // get the light at user's current desk
         DeskService.getAllDesks(new Response() {
             @Override
@@ -107,6 +109,7 @@ public class DeskControl extends Fragment {
         currentlyAssignedDesk= view.findViewById(R.id.control_current_desk);
         progress = view.findViewById(R.id.progressBar);
         controlPlane = view.findViewById(R.id.control_plane);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // setup gesture listeners
         setupGestureListeners();
@@ -197,11 +200,33 @@ public class DeskControl extends Fragment {
                 @Override public void onFaceUp() {
                     // Device Facing up
                     System.out.println("Quiet mode off");
+                    UserService.setUserStatus(userId, Constants.Status.AVAILABLE, new Response() {
+                        @Override
+                        public void onSuccess(Object data) {
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+                    });
                 }
 
                 @Override public void onFaceDown() {
                     // Device Facing down
                     System.out.println("Quiet mode on");
+                    UserService.setUserStatus(userId, Constants.Status.DO_NOT_DISTURB, new Response() {
+                        @Override
+                        public void onSuccess(Object data) {
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+                    });
                     v.vibrate(500);
                 }
             };
