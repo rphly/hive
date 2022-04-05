@@ -43,6 +43,7 @@ public class DeskService extends BaseService {
                         e.printStackTrace();
                     }
                 } else {
+                    System.out.println("Hello!");
                     handler.onFailure();
                 };
             }

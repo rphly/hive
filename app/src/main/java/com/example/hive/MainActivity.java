@@ -12,9 +12,11 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
+import com.example.hive.fragments.DeskControl;
 import com.example.hive.fragments.Home;
 import com.example.hive.fragments.Me;
 import com.example.hive.utils.AuthenticatedActivity;
+import com.github.nisrulz.sensey.Sensey;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -28,12 +30,12 @@ public class MainActivity extends AuthenticatedActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.home);
-
         Home home = new Home();
-        Me me= new Me();
+        Me me = new Me();
+        DeskControl desk = new DeskControl();
 
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, home).commit();
 
         bottomNavigationView.setOnItemSelectedListener(
@@ -41,17 +43,22 @@ public class MainActivity extends AuthenticatedActivity  {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.home:
+                            case R.id.nav_home:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, home).commit();
+                                Sensey.getInstance().stop();
                                 return true;
-                            case R.id.profile:
+                            case R.id.nav_profile:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, me).commit();
+                                Sensey.getInstance().stop();
+                                return true;
+                            case R.id.nav_desk:
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container, desk).commit();
                                 return true;
                             default:
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, home).commit();
+                                Sensey.getInstance().stop();
                                 return true;
                         }
-
                     }
                 }
         );
