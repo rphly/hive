@@ -58,7 +58,7 @@ public class QRCodeScanner extends AuthenticatedActivity {
                 @Override
                 public void onSuccess(Object obj) {
                     Map data = (Map) obj;
-                    String apiKey = (String) data.get("apiKey");
+                    String apiKey = String.valueOf(data.get("apiKey"));
                     String deskId = String.valueOf(data.get("desk"));
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     signInToDesk(deskId, userId, new Response() {

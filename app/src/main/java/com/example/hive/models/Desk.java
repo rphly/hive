@@ -7,22 +7,28 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Desk {
-    private String id, currentUserId, lightToken, label;
+    private String id, currentUserId, lightToken, label, apiKey;
     private Location location;
     private int timeCheckedIn;
 
-    public Desk(String id, String currentUserId, String lightToken, String label, float x, float y, int timeCheckedIn) {
+    public Desk(String id, String currentUserId, String lightToken, String label, float x, float y, int timeCheckedIn, String apiKey) {
         this.id = id;
         this.currentUserId = currentUserId;
         this.lightToken = lightToken;
         this.label = label;
         this.location = new Location(x, y);
         this.timeCheckedIn = timeCheckedIn;
+        this.apiKey = apiKey;
     };
 
     public boolean isAvailable() {
         return currentUserId == null;
     }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
     public String getCurrentUserId() {
         return this.currentUserId;
     }
@@ -46,7 +52,8 @@ public class Desk {
         String currentUserId = (String) data.get("current_user");
         String id = String.valueOf(data.get("id"));
         int timeCheckedIn = Integer.valueOf(String.valueOf(data.get("time_checked_in")));;
-        Desk desk = new Desk(id, currentUserId, lightToken, label, x, y, timeCheckedIn);
+        String apiKey = String.valueOf(data.get("apiKey"));
+        Desk desk = new Desk(id, currentUserId, lightToken, label, x, y, timeCheckedIn, apiKey);
         return desk;
     }
 
