@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -82,8 +83,6 @@ public class FragmentMap extends Fragment {
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         buttonParams.leftMargin = (int) Math.round(x/100.0 * mapWidth); //map width is the width of the image, in pixels
         buttonParams.topMargin = (int) Math.round(y/100.0 * mapWidth);
-        String location = "(" + x + "," + y + ")";
-        b1.setText(location);
 
         // set user details
         if (user != null) {
@@ -95,6 +94,9 @@ public class FragmentMap extends Fragment {
             args.putString("email", user.getEmail());
             args.putInt("status", user.getStatus().equals(Constants.Status.AVAILABLE) ? 1 : 0);
             bottomSheet.setArguments(args);
+
+            //set profile picture
+            b1.setBackground(Drawable.createFromPath("@drawable/user_circle"));
 
             b1.setOnClickListener(l -> {
                 bottomSheet.show(((AppCompatActivity) b1.getContext()).getSupportFragmentManager(), user.getId());
