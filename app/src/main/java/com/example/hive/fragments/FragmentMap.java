@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,19 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.hive.models.User;
 import com.example.hive.services.DeskService;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.hive.R;
 import com.example.hive.services.Response;
 import com.example.hive.services.UserService;
 import com.example.hive.utils.Constants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Map;
 import java.util.Objects;
@@ -32,6 +41,7 @@ import java.util.Objects;
 public class FragmentMap extends Fragment {
     // The onCreateView method is called when Fragment should create its View object hierarchy,
     // either dynamically or via XML layout inflation.
+    private StorageReference storageReference;
 
     public void refreshUserButtons(RelativeLayout mapRelativeLayout, int bitmapWidth, int bitmapHeight) {
         //Get Desk
@@ -79,9 +89,10 @@ public class FragmentMap extends Fragment {
 
     public void makeButton(int x, int y, String deskID, RelativeLayout relLayout, int mapWidth, int mapHeight, User user) {
         //puts a button the specified relative layout
-        Button b1 = new Button(relLayout.getContext());
+        ImageButton b1 = new ImageButton(relLayout.getContext());
+        //Button b1 = new Button(relLayout.getContext());
         b1.setAlpha(1.0F);
-        b1.setText("Desk" + deskID);
+        //b1.setText("Desk" + deskID);
         //Set the button params, the position of it in its parent relative layout
         RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         buttonParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -89,7 +100,8 @@ public class FragmentMap extends Fragment {
 
         // set user details
         if (user != null) {
-            b1.setText(user.getFirstName());
+
+            //b1.setText(user.getFirstName());
             UserDetailsBottomSheet bottomSheet = new UserDetailsBottomSheet();
             Bundle args = new Bundle();
             args.putString("id", user.getId());
@@ -97,6 +109,40 @@ public class FragmentMap extends Fragment {
             args.putString("email", user.getEmail());
             args.putInt("status", user.getStatus().equals(Constants.Status.AVAILABLE) ? 1 : 0);
             bottomSheet.setArguments(args);
+
+            Constants.Status status = user.getStatus();
+            if(status == Constants.Status.AVAILABLE){
+                b1.setBackgroundColor(Color.parseColor("#12BC00"));
+            }
+            else{
+                b1.setBackgroundColor(Color.parseColor("#d2232a"));
+            }
+
+            if(user.getProfilePicUri()!=null){
+                String id = user.getId();
+
+                Uri imgUri=Uri.parse(user.getProfilePicUri());
+                b1.setImageURI(null);
+                b1.setImageURI(imgUri);
+                //b1.setImageURI(Uri.parse(user.getProfilePicUri()));
+                StorageReference ref = storageReference.child(String.format("images/%s/profile_pic", id));
+                ref.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        b1.setImageBitmap(bmp);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+
+                    }
+                });
+            }
+            else{
+                b1.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.user_circle));
+            }
 
             //set profile picture
 //            b1.setBackground(this.getResources().getDrawable(R.drawable.user_circle));
@@ -122,7 +168,8 @@ public class FragmentMap extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
-
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         return inflater.inflate(R.layout.fragment_map, parent, false);
     }
 
