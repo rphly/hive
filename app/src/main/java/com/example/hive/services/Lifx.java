@@ -11,6 +11,8 @@ import static com.example.hive.utils.Constants.Temperature;
 
 import android.annotation.SuppressLint;
 
+import com.example.hive.models.Light;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,12 +79,40 @@ public class Lifx {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    System.out.println("Main light succeeded");
                     try {
                         JSONArray jsonArray = new JSONArray(response.body().string());
                         if (jsonArray.length() > 0) {
                             JSONObject j = (JSONObject) jsonArray.get(0);
                             mainLightId = (String) j.get("id");
+                            response.body().close();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    };
+
+    public void getMainLight(com.example.hive.services.Response handler) {
+        getMainLight(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response.body().string());
+                        if (jsonArray.length() > 0) {
+                            JSONObject j = (JSONObject) jsonArray.get(0);
+                            mainLightId = (String) j.get("id");
+                            boolean isOn = ((String) j.get("power")).equals("on");
+                            double brightness = j.getDouble("brightness");
+                            int kelvin = j.getJSONObject("color").getInt("kelvin");
+                            handler.onSuccess(new Light(mainLightId, isOn, brightness, kelvin));
                             response.body().close();
                         }
                     } catch (JSONException e) {
