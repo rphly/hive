@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hive.MainActivity;
 import com.example.hive.R;
-import com.example.hive.activities.GestureRemote;
 import com.example.hive.activities.QR.QRCodeScanner;
 import com.example.hive.models.Desk;
 import com.example.hive.models.User;
@@ -53,6 +52,7 @@ public class Dashboard extends Fragment {
         UserService.getUserById(currentUserId, new Response() {
             @Override
             public void onSuccess(Object data) {
+                System.out.println(currentUserId);
                 currentUser = User.fromObject(data);
                 isLoadingDesks = false;
 
@@ -93,10 +93,7 @@ public class Dashboard extends Fragment {
             if (currentDeskMsg != null) {
                 currentDeskMsg.setText(String.format("You are currently assigned to Desk %s.", currentDesk.getLabel()));
             }
-            dashboardButton.setText("Gesture Remote");
-            dashboardButton.setOnClickListener(l -> {
-                startActivity(new Intent(getActivity(), GestureRemote.class));
-            });
+            dashboardButton.setVisibility(View.GONE);
 
             if (deskSignOutButton != null) {
                 deskSignOutButton.setOnClickListener(l -> {
@@ -123,8 +120,9 @@ public class Dashboard extends Fragment {
             dashboardButton.setOnClickListener(l -> {
                 startActivity(new Intent(getActivity(), QRCodeScanner.class));
             });
+            dashboardButton.setVisibility(View.VISIBLE);
         }
-        dashboardButton.setVisibility(View.VISIBLE);
+
     }
 
     @Override

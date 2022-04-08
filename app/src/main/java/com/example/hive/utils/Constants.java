@@ -16,6 +16,7 @@ public class Constants {
     public static final String LIFX_PUT_STATE_URL = LIFX_BASE_URL + "state";
     public static final String LIFX_POST_TOGGLE_POWER_URL = LIFX_BASE_URL + "toggle";
     public static final String LIFX_POST_STATE_DELTA_URL = LIFX_BASE_URL + "state/delta";
+    public static final String LIFX_POST_EFFECT_BREATHE = LIFX_BASE_URL + "effects/breathe";
 
     public static enum Temperature {
         COLD,
@@ -28,6 +29,7 @@ public class Constants {
     }
 
     public static class Colors {
+        public static final int white = Color.parseColor("#FFFFFF");
         public static final int red = Color.parseColor("#D2232A");
         public static final int yellow = Color.parseColor("#EA8000");
     }

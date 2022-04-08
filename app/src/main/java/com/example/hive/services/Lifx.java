@@ -4,6 +4,7 @@ import static com.example.hive.utils.Constants.DEFAULT_LIGHT_BRIGHTNESS_INTERVAL
 import static com.example.hive.utils.Constants.DEFAULT_LIGHT_COLD_KELVIN;
 import static com.example.hive.utils.Constants.DEFAULT_LIGHT_WARM_KELVIN;
 import static com.example.hive.utils.Constants.LIFX_BASE_URL;
+import static com.example.hive.utils.Constants.LIFX_POST_EFFECT_BREATHE;
 import static com.example.hive.utils.Constants.LIFX_POST_STATE_DELTA_URL;
 import static com.example.hive.utils.Constants.LIFX_POST_TOGGLE_POWER_URL;
 import static com.example.hive.utils.Constants.LIFX_PUT_STATE_URL;
@@ -191,6 +192,36 @@ public class Lifx {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     System.out.println("Light brightness successfully adjusted.");
+                }
+            }
+        });
+    }
+
+    private Call breathe(Callback callback) {
+        String url = String.format(LIFX_POST_EFFECT_BREATHE, "id:" + this.mainLightId);
+        @SuppressLint("DefaultLocale")
+        RequestBody body = RequestBody.create(
+                MediaType.parse("application/json"), "{\"color\": \"kelvin:1700\", \"period\": 2}");
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
+    public void breathe() {
+        breathe(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    System.out.println("Light will breathe.");
                 }
             }
         });
