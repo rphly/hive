@@ -129,6 +129,19 @@ public class DeskControl extends Fragment {
             LifxService.decreaseBrightness();
         });
 
+        Button warmTempBtn = view.findViewById(R.id.control_warm);
+        Button coldTempBtn = view.findViewById(R.id.control_cold);
+
+
+        warmTempBtn.setOnClickListener(l -> {
+            LifxService.setLightTempColdOrWarm(Constants.Temperature.WARM);
+        });
+
+        coldTempBtn.setOnClickListener(l -> {
+            LifxService.setLightTempColdOrWarm(Constants.Temperature.COLD);
+        });
+
+
         // setup update handler
         handler = new Handler();
         final int delayMs = 2000;
@@ -143,6 +156,7 @@ public class DeskControl extends Fragment {
 
     private void updateLight() {
         if (LifxService != null) {
+            System.out.println("Pinging for light...");
             LifxService.getMainLight(new Response() {
                 @Override
                 public void onSuccess(Object data) {
@@ -203,7 +217,7 @@ public class DeskControl extends Fragment {
                     UserService.setUserStatus(userId, Constants.Status.AVAILABLE, new Response() {
                         @Override
                         public void onSuccess(Object data) {
-
+                            LifxService.breathe();
                         }
 
                         @Override
@@ -219,7 +233,7 @@ public class DeskControl extends Fragment {
                     UserService.setUserStatus(userId, Constants.Status.DO_NOT_DISTURB, new Response() {
                         @Override
                         public void onSuccess(Object data) {
-
+                            LifxService.breathe();
                         }
 
                         @Override
@@ -259,6 +273,6 @@ public class DeskControl extends Fragment {
             };
 
             Sensey.getInstance().startFlipDetection(flipListener);
-            Sensey.getInstance().startShakeDetection(8.0F, 1000L,shakeListener);
+            Sensey.getInstance().startShakeDetection(7.0F, 1000L,shakeListener);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.hive.fragments;
+package com.example.hive.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hive.R;
+import com.example.hive.fragments.UserDetailsBottomSheet;
 import com.example.hive.models.Desk;
 import com.example.hive.models.User;
 import com.example.hive.services.DeskService;

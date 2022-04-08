@@ -33,6 +33,8 @@ public class Helpers {
         animate.setDuration(200);
         animate.setFillAfter(true);
         view.startAnimation(animate);
+        view.setClickable(true);
+        view.setFocusable(true);
     }
 
     public static void slideViewDown(View view) {
@@ -45,6 +47,8 @@ public class Helpers {
         animate.setDuration(200);
         animate.setFillAfter(true);
         view.startAnimation(animate);
+        view.setClickable(false);
+        view.setFocusable(false);
     }
 
     public static CharSequence toLowerCase(CharSequence chars) {

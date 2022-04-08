@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hive.R;
+import com.example.hive.adapters.UsersRecyclerViewAdapter;
 import com.example.hive.models.User;
 import com.example.hive.services.Response;
 import com.example.hive.services.UserService;
@@ -78,6 +79,9 @@ public class Home extends Fragment {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
+                        if (home.findViewById(R.id.searchResultsView) == null) {
+                            home.addView(searchResults, 1);
+                        }
                         // call users
                         UserService.getAllUsers(new Response() {
                             @Override
@@ -125,6 +129,7 @@ public class Home extends Fragment {
             adapter.setData(new ArrayList<User>());
             adapter.notifyDataSetChanged();
             Helpers.slideViewDown(searchResults);
+            home.removeView(searchResults);
             params.weight = 0;
             cancelSearchBtn.setLayoutParams(params);
         });
