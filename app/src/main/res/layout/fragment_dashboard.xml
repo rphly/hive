@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#efe9e5"
     tools:context=".fragments.Dashboard"
     android:id="@+id/fragment_dashboard"
     android:tag="fragment_dashboard">
@@ -38,6 +39,7 @@
                     android:layout_marginVertical="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#392d35"
                     app:cornerRadius="10dp"
                     app:iconGravity="start"
                     app:iconSize="10dp" />
@@ -48,6 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Sign out of desk"
+                    android:backgroundTint="#392d35"
 
                     android:padding="10dp"
                     />
