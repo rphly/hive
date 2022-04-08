@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class User {
-    private String firstName, lastName, email, id, profilePic;
+    private String firstName, lastName, email, id, profilePic, bio;
     private Constants.Status status;
     public User(String id, String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -15,14 +15,17 @@ public class User {
         this.email = email;
         this.id = id;
         this.status = Constants.Status.AVAILABLE;
+        this.bio = bio;
     }
 
-    public User(String id, String firstName, String lastName, String email, Constants.Status status) {
+    public User(String id, String firstName, String lastName, String email, String profilePic, Constants.Status status, String bio) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.id = id;
         this.status = status;
+        this.profilePic = profilePic;
+        this.bio = bio;
     }
 
     public Constants.Status getStatus() {return this.status;}
@@ -31,6 +34,8 @@ public class User {
     public String getLastName() {return this.lastName;}
     public String getFullName() {return this.firstName + " " + this.lastName;}
     public String getId() {return this.id;}
+    public String getProfilePicUri() { return this.profilePic; }
+    public String getBio(){return this.bio;}
 
     public static User fromObject(Object obj) {
         Map data = (Map) obj;
@@ -39,8 +44,10 @@ public class User {
         String email = (String) data.get("email");
         String id = String.valueOf(data.get("id"));
         Constants.Status status = Constants.Status.valueOf((String) data.get("status"));
+        String profilePic = (String) data.get("profilePic");
+        String bio = (String) data.get("bio");
 
-        User user = new User(id, firstName, lastName, email, status);
+        User user = new User(id, firstName, lastName, email, profilePic, status, bio);
         return user;
     }
 

@@ -12,7 +12,6 @@ public class UserService extends BaseService {
     public static void getUserById(String id, Response handler) {
         getFromFirebase(collection.child(id), handler);
     }
-
     public static void getAllUsers(Response handler) {
         getFromFirebase(collection, handler);
     }
