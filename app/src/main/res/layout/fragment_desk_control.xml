@@ -182,4 +182,33 @@
                 />
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/control_no_desk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="invisible"
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/control_astronaut"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:lottie_fileName="astronaut.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center_horizontal"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You don't have a desk yet."
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
 </FrameLayout>

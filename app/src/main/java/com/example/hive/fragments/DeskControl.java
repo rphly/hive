@@ -42,7 +42,7 @@ public class DeskControl extends Fragment {
     TextView lightStatus, currentBrightness, currentTemp, currentlyAssignedDesk;
     LottieAnimationView lightBulbAnimation;
     ProgressBar progress;
-    LinearLayout controlPlane;
+    LinearLayout controlPlane, noDesk;
     Desk currentDesk;
     Debouncer debouncer = new Debouncer();
     boolean isLoaded = false; // only applies for first load
@@ -83,6 +83,9 @@ public class DeskControl extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                } else {
+                    progress.setVisibility(View.INVISIBLE);
+                    noDesk.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -116,6 +119,7 @@ public class DeskControl extends Fragment {
 
         // set lights
         lightBulbAnimation = view.findViewById(R.id.control_light_bulb);
+        noDesk = view.findViewById(R.id.control_no_desk);
         Button increaseBrightness = view.findViewById(R.id.control_increase_brightness);
         Button decreaseBrightness = view.findViewById(R.id.control_decrease_brightness);
 
@@ -212,12 +216,15 @@ public class DeskControl extends Fragment {
             // flip detector
             FlipDetector.FlipListener flipListener = new FlipDetector.FlipListener() {
                 @Override public void onFaceUp() {
+                    if (LifxService == null) {
+                        return;
+                    }
                     // Device Facing up
                     System.out.println("Quiet mode off");
+                    LifxService.breathe();
                     UserService.setUserStatus(userId, Constants.Status.AVAILABLE, new Response() {
                         @Override
                         public void onSuccess(Object data) {
-                            LifxService.breathe();
                         }
 
                         @Override
@@ -228,12 +235,15 @@ public class DeskControl extends Fragment {
                 }
 
                 @Override public void onFaceDown() {
+                    if (LifxService == null) {
+                        return;
+                    }
                     // Device Facing down
                     System.out.println("Quiet mode on");
+                    LifxService.breathe();
                     UserService.setUserStatus(userId, Constants.Status.DO_NOT_DISTURB, new Response() {
                         @Override
                         public void onSuccess(Object data) {
-                            LifxService.breathe();
                         }
 
                         @Override
@@ -248,6 +258,9 @@ public class DeskControl extends Fragment {
             // shake detector
             ShakeDetector.ShakeListener shakeListener = new ShakeDetector.ShakeListener() {
                 @Override public void onShakeDetected() {
+                    if (LifxService == null) {
+                        return;
+                    }
                     // Shake detected, do something
                     if (light != null) {
                         if (isShaking == false) {
@@ -264,6 +277,9 @@ public class DeskControl extends Fragment {
                 }
 
                 @Override public void onShakeStopped() {
+                    if (LifxService == null) {
+                        return;
+                    }
                     if (isShaking == true) {
                         System.out.println("Stopped shaking");
                         isShaking = false;
