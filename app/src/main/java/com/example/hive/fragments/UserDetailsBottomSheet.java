@@ -38,6 +38,7 @@ public class UserDetailsBottomSheet extends BottomSheetDialogFragment {
         TextView emailView = v.findViewById(R.id.user_details_email);
         TextView statusText = v.findViewById(R.id.user_details_status);
         TextView location = v.findViewById(R.id.user_details_location);
+        TextView bio = v.findViewById(R.id.user_details_bio);
         ImageView profilePic = v.findViewById(R.id.user_details_profile_pic);
         ImageView statusIndicator = v.findViewById(R.id.user_details_status_badge);
 
@@ -46,7 +47,7 @@ public class UserDetailsBottomSheet extends BottomSheetDialogFragment {
         String locationStr = args.getString("location", "");
         String email = args.getString("email", "");
         int status = args.getInt("status");
-
+        String bioStr = args.getString("bio");
         name.setText(args.getString("fullName", ""));
 
         // email
@@ -86,6 +87,9 @@ public class UserDetailsBottomSheet extends BottomSheetDialogFragment {
 
             }
         });
+
+        // bio
+        bio.setText(bioStr);
 
         return v;
     }

@@ -21,7 +21,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:cardCornerRadius="50dp">
+                app:cardCornerRadius="300dp">
 
                 <ImageButton
                     android:id="@+id/profile_pic"

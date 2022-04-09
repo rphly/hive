@@ -306,6 +306,7 @@ public class FragmentMap extends Fragment {
             args.putString("fullName", user.getFullName());
             args.putString("email", user.getEmail());
             args.putInt("status", user.getStatus().equals(Constants.Status.AVAILABLE) ? 1 : 0);
+            args.putString("bio", user.getBio());
             bottomSheet.setArguments(args);
 
             Constants.Status status = user.getStatus();

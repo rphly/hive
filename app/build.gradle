@@ -24,10 +24,6 @@ android {
         }
     }
 
-    buildTypes.each {
-        it.buildConfigField 'String', 'LIFX_API_KEY', LIFX_API_KEY
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

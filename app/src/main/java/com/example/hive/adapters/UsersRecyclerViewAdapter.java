@@ -67,6 +67,7 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
         args.putString("fullName", user.getFullName());
         args.putString("email", user.getEmail());
         args.putInt("status", user.getStatus().equals(Constants.Status.AVAILABLE) ? 1 : 0);
+        args.putString("bio", user.getBio());
         bottomSheet.setArguments(args);
 
         holder.row.setOnClickListener(l -> {
@@ -95,7 +96,6 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
                 if (!desks.isEmpty()) {
                     String label = desks.get(0).getLabel();
                     holder.location.setText(String.format("Currently located at %s", label));
-
                     // update bottomsheet also
                     args.putString("location", label);
                     bottomSheet.setArguments(args);
