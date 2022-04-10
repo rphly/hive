@@ -40,7 +40,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"
                     android:layout_marginBottom="20sp"
-                    android:text="Check in" />
+                    android:text="Check in"
+                    android:backgroundTint="#392d35" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
