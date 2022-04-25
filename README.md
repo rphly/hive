@@ -1,7 +1,7 @@
 # Hive
 ![hive](https://i.imgur.com/tbqLryV.png)
 ### NOTE ⚠️
-<b>This project requires a firebase google-services.json file to run. Please contact anyone in the group for the credentials file.</b>
+<b>This project requires a firebase google-services.json file to run. It should be pushed to master. If not, please contact anyone in the group for the credentials file.</b>
 
 # Team 2B
 
