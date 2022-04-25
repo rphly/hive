@@ -46,10 +46,14 @@ app/src/main/java/com/example/hive
 ```
 
 ## System Design and Implementation
-1. Android Java App: The android app is coded in Java and built in android studio.
-2. Firebase: Firebase authentication implements the registration and login system, and stores the users and desks data in the Realtime Database, with the profile pictures stored in Cloud Storage.
+1. <b>Android Java App</b>: The android app is coded in Java and built in android studio.
+
+2. <b>Firebase:</b> Firebase authentication implements the registration and login system, and stores the users and desks data in the Realtime Database, with the profile pictures stored in Cloud Storage.
+
 3. LIFX: A HTTP API used for controlling our Internet of Things connected smart light.
+
 4. QR code: They are used to uniquely identify desks in the office. When a user logs into a desk via the QR code, the unique desk will then be logged in by the user as shown in the interactive map.
+
 5. Sensey Android Library: Used to detect user gestures and invoke functionality such as turning the lights on and off and setting user status to “do not disturb”.
 
 _Our backendless architecture_
@@ -57,7 +61,7 @@ _Our backendless architecture_
 
 ## Highlights of the concepts used
 1. Implicit & Explicit intent: Implicit intent is used to redirect the user to an external email application when they tap on another user’s email. Explicit intent is used to launch various activities.
-\n
+
 2. Adapter and RecyclerView : It is used to display a list of users in our search function to find their teammates.
 
 3. OnTouchListener: OnTouchListener is used to allow users to scroll the office map and for users to visually see where other teammates are located.
@@ -72,30 +76,20 @@ _Our backendless architecture_
 
 8. Interface: It was used to ensure asynchronous getting and setting of data via the Response interface, which ensures that onSuccess and onFailure callbacks are implemented.
 
-9. Activity Lifecycle - onCreate, onDestroy etc
-Each activity after the log in has a super call to the AuthenticatedActivity class, to ensure that a user is logged in before being able to access any of the activities.
+9. Activity Lifecycle - onCreate, onDestroy etc: Each activity after the log in has a super call to the AuthenticatedActivity class, to ensure that a user is logged in before being able to access any of the activities. In the GestureRemote activity, onDestroy is used to destroy the current instance of the Sensey object, this is done to stop any gesture detection after the user leaves the GestureRemote activity. Any gestures to the phone outside of the GestureRemote activity will not be detected and reflect any calls to the LIFX API.
 
-In the GestureRemote activity, onDestroy is used to destroy the current instance of the Sensey object, this is done to stop any gesture detection after the user leaves the GestureRemote activity. Any gestures to the phone outside of the GestureRemote activity will not be detected and reflect any calls to the LIFX API.
+10. Using java to create and edit widgets (buttons): A custom makeButton function was used to create the User buttons iteratively, and set display of the user profile, as well as location of user based on their occupied desk accordingly.
 
-10. Using java to create and edit widgets (buttons)
-A custom makeButton function was used to create the User buttons iteratively, and set display of the user profile, as well as location of user based on their occupied desk accordingly.
+11. Toasts: Used in the updating of the user’s profile page, providing feedback when the change is successful or unsuccessful via a toast pop-up.
 
-11. Toasts
-Used in the updating of the user’s profile page, providing feedback when the change is successful or unsuccessful via a toast pop-up.
-
-12. ploading and parsing of images
-getBitmap() was used to retrieve bitmap data from the user gallery for uploading to the Cloud Storage. This allows retrieval of bitmap data anytime the user profile picture is needed to be displayed, such as in the FragmentMap or UserDetailsBottomSheet fragments.
+12. ploading and parsing of images: getBitmap() was used to retrieve bitmap data from the user gallery for uploading to the Cloud Storage. This allows retrieval of bitmap data anytime the user profile picture is needed to be displayed, such as in the FragmentMap or UserDetailsBottomSheet fragments.
 
 
-13. Encapsulation/Separation of Concerns + Static factory methods
-We use data models such as UserModel, DeskModel, LightModel to encapsulate logic related to a particular object in its own class. This allows us to re-use helper functions, and use static factory methods to create objects from API calls.
+13. Encapsulation/Separation of Concerns + Static factory methods: We use data models such as UserModel, DeskModel, LightModel to encapsulate logic related to a particular object in its own class. This allows us to re-use helper functions, and use static factory methods to create objects from API calls.
 
-14. Inheritance
-LIFXService, UserService inherits from a BaseService class that implements commonly used calls to Firebase. 
+14. Inheritance: LIFXService, UserService inherits from a BaseService class that implements commonly used calls to Firebase. 
 
-
-15. Threading
-We use threading to poll our database for updates. As we are unable to run asynchronous / blocking calls on the main UI thread, we have to create a separate thread to poll for updates. This allows us to refresh stale data inside our app
+15. Threading: We use threading to poll our database for updates. As we are unable to run asynchronous / blocking calls on the main UI thread, we have to create a separate thread to poll for updates. This allows us to refresh stale data inside our app
 
 
 
