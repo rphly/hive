@@ -92,4 +92,12 @@ _Our backendless architecture_
 15. <b>Threading</b>: We use threading to poll our database for updates. As we are unable to run asynchronous / blocking calls on the main UI thread, we have to create a separate thread to poll for updates. This allows us to refresh stale data inside our app.
 
 _How we organize our code to improve modularity, encapsulation and productivity_
-![organization]()
+![organization](https://github.com/rphly/hive/blob/master/Images/organization.jpg)
+
+## Post-Mortem
+While our application functions as a good minimum viable product, if we had more time, we would like to implement a local network version which will allow us to communicate with our desk light without having to make an HTTP call and thus being prone to network failures. Also, the HTTP round-trip has a lot of overhead + speed delay which can be avoided if we instead had an offline LAN setup.
+
+In addition, for the purposes of testing, we currently store the API_KEY for each light on our Firebase backend (our sincerest apologies), which is not good practice at all. If we had a backend service, we could instead exchange keys there and not store the keys on cloud storage but it would have been out of the scope for our MVP project. Currently, the user has to use our client to scan an offline QR code (which contains a strong hash) that will map to the keys in the backend. So at the very least, they would still need access to our physical QR code, which can be refreshed/re-generated.
+
+## Effort and Contributions of each individual team member
+Each individual team member made equal contributions to this project. 
