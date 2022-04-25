@@ -91,7 +91,8 @@ _Our backendless architecture_
 
 15. <b>Threading</b>: We use threading to poll our database for updates. As we are unable to run asynchronous / blocking calls on the main UI thread, we have to create a separate thread to poll for updates. This allows us to refresh stale data inside our app.
 
-_How we organize our code to improve modularity, encapsulation and productivity_
+_How we organize our code to improve modularity, encapsulation and productivity_ 
+
 ![organization](https://github.com/rphly/hive/blob/master/Images/organization.jpg)
 
 ## Post-Mortem
