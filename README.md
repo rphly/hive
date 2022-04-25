@@ -56,29 +56,21 @@ _Our backendless architecture_
 ![SystemArchi](https://github.com/rphly/hive/blob/master/Images/SystemArchi.jpg)
 
 ## Highlights of the concepts used
-1. Implicit & Explicit intent
-Implicit intent is used to redirect the user to an external email application when they tap on another user’s email. Explicit intent is used to launch various activities.
+1. Implicit & Explicit intent: Implicit intent is used to redirect the user to an external email application when they tap on another user’s email. Explicit intent is used to launch various activities.
+\n
+2. Adapter and RecyclerView : It is used to display a list of users in our search function to find their teammates.
 
-2. Adapter and RecyclerView 
-It is used to display a list of users in our search function to find their teammates.
+3. OnTouchListener: OnTouchListener is used to allow users to scroll the office map and for users to visually see where other teammates are located.
 
-3. OnTouchListener
-OnTouchListener is used to allow users to scroll the office map and for users to visually see where other teammates are located.
+4. OnClickListener: OnClickListeners are used throughout the app, to allow for the app to respond to user interactions, such as submitting user data during registration and login, or altering profile data.
 
-4. OnClickListener
-OnClickListeners are used throughout the app, to allow for the app to respond to user interactions, such as submitting user data during registration and login, or altering profile data.
+5. Singleton design pattern: This design pattern is used to handle external LIFX API calls to ensure API keys are not stale; no dangling LIFX instance with stale API key.
 
-5. Singleton design pattern
-This design pattern is used to handle external LIFX API calls to ensure API keys are not stale; no dangling LIFX instance with stale API key.
+6. OnBindViewHolder: It is used to populate user information in our search function to find their teammates.
 
-6. OnBindViewHolder
-It is used to populate user information in our search function to find their teammates.
+7. OnTextChanged: It is used to filter users from our list when users type in a username in the search bar to find their teammates.
 
-7. OnTextChanged
-It is used to filter users from our list when users type in a username in the search bar to find their teammates.
-
-8. Interface
-It was used to ensure asynchronous getting and setting of data via the Response interface, which ensures that onSuccess and onFailure callbacks are implemented.
+8. Interface: It was used to ensure asynchronous getting and setting of data via the Response interface, which ensures that onSuccess and onFailure callbacks are implemented.
 
 9. Activity Lifecycle - onCreate, onDestroy etc
 Each activity after the log in has a super call to the AuthenticatedActivity class, to ensure that a user is logged in before being able to access any of the activities.
