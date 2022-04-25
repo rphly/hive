@@ -51,7 +51,7 @@ app/src/main/java/com/example/hive
 3. LIFX: A HTTP API used for controlling our Internet of Things connected smart light.
 4. QR code: They are used to uniquely identify desks in the office. When a user logs into a desk via the QR code, the unique desk will then be logged in by the user as shown in the interactive map.
 5. Sensey Android Library: Used to detect user gestures and invoke functionality such as turning the lights on and off and setting user status to “do not disturb”.
-
+![SystemArchi](https://github.com/rphly/hive/blob/master/Images/SystemArchi.jpg)
 
 
 
