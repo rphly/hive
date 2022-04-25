@@ -3,21 +3,21 @@
 ### NOTE ⚠️
 <b>This project requires a firebase google-services.json file to run. Please contact anyone in the group for the credentials file.</b>
 
-# Developers
+# Team 2B
 
-Raphael Yee &nbsp;&nbsp; @rphly
+Raphael Yee &nbsp;&nbsp; @rphly 1005292
 <br/>
-Joyce  &nbsp;&nbsp; @joyceeqq
+Joyce  &nbsp;&nbsp; @joyceeqq 1005307
 <br/>
-Christopher Lye &nbsp;&nbsp; @chris-lye 
+Christopher Lye &nbsp;&nbsp; @chris-lye 1004993
 <br/>
-Shaun Neo &nbsp;&nbsp; @shaunneo
+Shaun Neo &nbsp;&nbsp; @shaunneo 1005201
 <br/>
-Atisha Teriyapriom &nbsp;&nbsp; @tishteri
+Atisha Teriyapirom &nbsp;&nbsp; @tishteri 1005244
 <br/>
-Jodi Wu &nbsp;&nbsp; @jodiwu
+Jodi Wu &nbsp;&nbsp; @jodiwu 1005224
 <br/>
-Meihui &nbsp;&nbsp; @meihuikkk
+Meihui &nbsp;&nbsp; @meihuikkk 1004864
 <br/>
 
 # Introduction
